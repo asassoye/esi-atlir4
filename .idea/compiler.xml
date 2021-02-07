@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="atlir4.cards" />
         <module name="atlir4.oo_base" />
         <module name="atlir4.blackjack" />
       </profile>
@@ -13,6 +14,7 @@
     <bytecodeTargetLevel>
       <module name="atlir4" target="11" />
       <module name="atlir4.blackjack" target="11" />
+      <module name="atlir4.cards" target="11" />
       <module name="atlir4.oo_base" target="11" />
     </bytecodeTargetLevel>
   </component>
