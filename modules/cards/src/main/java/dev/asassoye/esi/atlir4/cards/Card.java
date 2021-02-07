@@ -23,9 +23,9 @@
 package dev.asassoye.esi.atlir4.cards;
 
 public class Card {
-    private Color color;
+    private final Color color;
 
-    private Value value;
+    private final Value value;
 
     public Card(Color color, Value value) {
         if (color == null) {
@@ -42,10 +42,10 @@ public class Card {
 
     @Override
     public String toString() {
-        return this.to_String(true);
+        return this.toString(true);
     }
 
-    public String to_String(boolean full) {
+    public String toString(boolean full) {
         if (full) {
             return this.value.toString() + " de " + this.color.toString();
         } else {

@@ -22,27 +22,47 @@
 
 package dev.asassoye.esi.atlir4.cards;
 
-public class Main {
-    public static void main(String[] args) {
-        int n = 0;
-        if (args.length > 0) {
-            try {
-                n = Integer.parseInt(args[0]);
-            } catch (NumberFormatException e) {
-                System.err.printf("L'agument %s doit être un entier\n", args[0]);
-                System.exit(-1);
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class Deck {
+    List<Card> cards;
+
+    public Deck() {
+        this.cards = new ArrayList<>();
+
+        for (Color color : Color.values()) {
+            for (Value value : Value.values()) {
+                this.cards.add(new Card(color, value));
             }
-        } else {
-            n = Color.values().length * Value.values().length;
         }
+    }
 
-        Deck deck = new Deck().shuffle();
+    public Deck shuffle() {
+        Collections.shuffle(cards);
+        return this;
+    }
 
-        Card card;
-        for (var i = 1; i <= n; ++i) {
-            card = deck.hit();
-            System.out.printf("Carte %d: %s\n", i, card.toString());
-        }
+    public boolean isEmpty() {
+        return this.cards.isEmpty();
+    }
 
+    public Card hit() {
+        Card card = this.cards.get(0);
+        this.cards.remove(0);
+
+        return card;
+    }
+
+    public int size() {
+        return cards.size();
+    }
+
+    @Override
+    public String toString() {
+        return "Deck{" +
+                "cards=" + cards +
+                '}';
     }
 }
