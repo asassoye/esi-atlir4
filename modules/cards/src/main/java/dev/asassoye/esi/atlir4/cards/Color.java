@@ -22,10 +22,28 @@
 
 package dev.asassoye.esi.atlir4.cards;
 
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("hello world!");
-        Card card = new Card(Color.HEART, Value.KING);
-        System.out.println(card);
+public enum Color {
+    CLUB,
+    DIAMOND,
+    HEART,
+    SPADE;
+
+    public String toString(boolean unicode) {
+        switch (this) {
+            case CLUB:
+                return unicode ? "\u2663" : "trèfle";
+            case HEART:
+                return unicode ? "\u2665" : "coeur";
+            case SPADE:
+                return unicode ? "\u2660" : "pique";
+            case DIAMOND:
+            default:
+                return unicode ? "\u2666" : "carreau";
+        }
+    }
+
+    @Override
+    public String toString() {
+        return this.toString(false);
     }
 }

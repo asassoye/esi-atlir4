@@ -22,10 +22,42 @@
 
 package dev.asassoye.esi.atlir4.cards;
 
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("hello world!");
-        Card card = new Card(Color.HEART, Value.KING);
-        System.out.println(card);
+public class Card {
+    private Color color;
+
+    private Value value;
+
+    public Card(Color color, Value value) {
+        if (color == null) {
+            throw new IllegalArgumentException("card color must be defined");
+        }
+
+        if (value == null) {
+            throw new IllegalArgumentException("card value must be defined");
+        }
+
+        this.color = color;
+        this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return this.to_String(true);
+    }
+
+    public String to_String(boolean full) {
+        if (full) {
+            return this.value.toString() + " de " + this.color.toString();
+        } else {
+            return this.color.toString(true) + this.value.toString(false);
+        }
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public Value getValue() {
+        return value;
     }
 }
