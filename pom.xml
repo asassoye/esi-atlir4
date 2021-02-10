@@ -16,6 +16,7 @@
     </properties>
 
     <modules>
+        <module>modules/utils</module>
         <module>modules/oo_base</module>
         <module>modules/cards</module>
         <module>modules/blackjack</module>
@@ -72,7 +73,4 @@
             </plugin>
         </plugins>
     </build>
-
-
-
 </project>

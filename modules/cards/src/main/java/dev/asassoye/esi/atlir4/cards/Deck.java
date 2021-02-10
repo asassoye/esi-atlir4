@@ -23,8 +23,11 @@
 package dev.asassoye.esi.atlir4.cards;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import dev.asassoye.esi.atlir4.cards.Exceptions.EmptyDeckException;
 
 public class Deck {
     List<Card> cards;
@@ -39,6 +42,11 @@ public class Deck {
         }
     }
 
+    public Deck(Collection<Card> cards) {
+        this.cards = new ArrayList<>();
+        this.cards.addAll(cards);
+    }
+
     public Deck shuffle() {
         Collections.shuffle(cards);
         return this;
@@ -49,6 +57,9 @@ public class Deck {
     }
 
     public Card hit() {
+        if (this.isEmpty()) {
+            throw new EmptyDeckException();
+        }
         Card card = this.cards.get(0);
         this.cards.remove(0);
 
