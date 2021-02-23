@@ -47,6 +47,10 @@ public class Point {
      * @param point the point
      */
     public Point(Point point) {
+        if (point == null) {
+            throw new IllegalArgumentException();
+        }
+
         this.x = point.x;
         this.y = point.y;
     }
@@ -69,6 +73,15 @@ public class Point {
      * @return the double
      */
     double distanceTo(Point other) {
-        return 0.0; //TODO
+        if (other == null) {
+            throw new IllegalArgumentException();
+        }
+
+        double x1 = this.x;
+        double y1 = this.y;
+        double x2 = other.x;
+        double y2 = other.y;
+
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 }
