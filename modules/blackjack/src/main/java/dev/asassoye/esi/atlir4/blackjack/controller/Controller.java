@@ -26,17 +26,29 @@ import dev.asassoye.esi.atlir4.blackjack.model.GameStatus;
 import dev.asassoye.esi.atlir4.blackjack.model.Model;
 import dev.asassoye.esi.atlir4.blackjack.view.InterfaceView;
 
+/**
+ * The type Controller.
+ */
 public class Controller {
     private final Model game;
 
     private final InterfaceView view;
 
+    /**
+     * Instantiates a new Controller.
+     *
+     * @param model the model
+     * @param view  the view
+     */
     public Controller(Model model, InterfaceView view) {
         this.game = model;
         this.view = view;
         view.clearScreen();
     }
 
+    /**
+     * Start game.
+     */
     public void startGame() {
         this.view.displayBalance(this.game.getPlayer());
 

@@ -9,11 +9,13 @@
         <module name="atlir4.cards" />
         <module name="atlir4.utils" />
         <module name="atlir4.oo_base" />
+        <module name="atlir4.asciipaint" />
         <module name="atlir4.blackjack" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="atlir4" target="11" />
+      <module name="atlir4.asciipaint" target="11" />
       <module name="atlir4.blackjack" target="11" />
       <module name="atlir4.cards" target="11" />
       <module name="atlir4.oo_base" target="11" />

@@ -20,6 +20,7 @@
         <module>modules/oo_base</module>
         <module>modules/cards</module>
         <module>modules/blackjack</module>
+        <module>modules/asciipaint</module>
     </modules>
 
     <dependencies>
