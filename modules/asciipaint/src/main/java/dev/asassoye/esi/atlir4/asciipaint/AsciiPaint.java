@@ -54,7 +54,7 @@ public class AsciiPaint {
      * @param color  the color
      */
     public void newCircle(int x, int y, double radius, char color) {
-        //TODO
+        this.drawing.addShape(new Circle(new Point(x, y), radius, color));
     }
 
     /**
@@ -67,7 +67,7 @@ public class AsciiPaint {
      * @param color  the color
      */
     public void newRectangle(int x, int y, double width, double height, char color) {
-        //TODO
+        this.drawing.addShape(new Rectangle(new Point(x, y), width, height, color));
     }
 
     /**
@@ -79,7 +79,7 @@ public class AsciiPaint {
      * @param color the color
      */
     public void newSquare(int x, int y, double side, char color) {
-        //TODO
+        this.drawing.addShape(new Square(new Point(x, y), side, color));
     }
 
     /**
@@ -88,8 +88,25 @@ public class AsciiPaint {
      * @return the string
      */
     String asAscii() {
-        // TODO
-        return "";
+        int height = this.drawing.getHeight();
+        int width = this.drawing.getWidth();
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (var i = 0; i < height; ++i) {
+            for (var j = 0; j < width; ++j) {
+                Shape current = this.drawing.getShape(new Point(j, i));
+
+                if (current != null) {
+                    stringBuilder.append(current.getColor());
+                } else {
+                    stringBuilder.append(' ');
+                }
+            }
+            stringBuilder.append('\n');
+        }
+
+        return stringBuilder.toString();
     }
 
 }

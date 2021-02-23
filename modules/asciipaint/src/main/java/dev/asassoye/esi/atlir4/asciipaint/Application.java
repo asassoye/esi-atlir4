@@ -34,7 +34,11 @@ public class Application {
      * @param args the input arguments
      */
     public static void main(String[] args) {
-        System.out.println("Hello from asciipaint");
+        AsciiPaint asciiPaint = new AsciiPaint(15, 15);
+        asciiPaint.newCircle(10, 5, 3, 'c');
+        asciiPaint.newSquare(1, 1, 3, 'r');
+
+        System.out.println(asciiPaint.asAscii());
     }
 
     /**
