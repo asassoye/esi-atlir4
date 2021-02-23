@@ -60,6 +60,9 @@ public class Drawing {
      * @param shape the shape
      */
     public void addShape(Shape shape) {
+        if (shape == null) {
+            throw new IllegalArgumentException();
+        }
         this.shapes.add(shape);
     }
 
@@ -70,6 +73,10 @@ public class Drawing {
      * @return the shape
      */
     public Shape getShape(Point point) {
+        if (point == null) {
+            throw new IllegalArgumentException();
+        }
+
         for (var shape : this.shapes) {
             if (shape.isInside(point)) {
                 return shape;
