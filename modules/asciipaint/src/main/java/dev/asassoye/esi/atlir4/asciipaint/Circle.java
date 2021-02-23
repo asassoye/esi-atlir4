@@ -39,7 +39,15 @@ public class Circle extends ColoredShape {
      */
     public Circle(Point center, double radius, char color) {
         super(color);
-        //TODO Exceptions
+
+        if (center == null) {
+            throw new IllegalArgumentException();
+        }
+
+        if (radius <= 0) {
+            throw new IllegalArgumentException();
+        }
+
         this.center = center;
         this.radius = radius;
         this.color = color;
@@ -47,7 +55,7 @@ public class Circle extends ColoredShape {
 
     @Override
     public boolean isInside(Point p) {
-        return false; //TODO
+        return this.center.distanceTo(p) <= this.radius;
     }
 
     @Override
