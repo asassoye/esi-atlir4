@@ -35,7 +35,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>dev.asassoye.esi.atlir4.asciipaint.Main</mainClass>
+                            <mainClass>dev.asassoye.esi.atlir4.asciipaint.Application</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -53,7 +53,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>dev.asassoye.esi.atlir4.asciipaint.Main</mainClass>
+                            <mainClass>dev.asassoye.esi.atlir4.asciipaint.Application</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

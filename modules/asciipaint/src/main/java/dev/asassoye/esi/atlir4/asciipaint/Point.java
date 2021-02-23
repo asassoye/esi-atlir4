@@ -22,8 +22,53 @@
 
 package dev.asassoye.esi.atlir4.asciipaint;
 
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello from asciipaint");
+/**
+ * The type Point.
+ */
+public class Point {
+    private double x;
+
+    private double y;
+
+    /**
+     * Instantiates a new Point.
+     *
+     * @param x the x
+     * @param y the y
+     */
+    public Point(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    /**
+     * Instantiates a new Point.
+     *
+     * @param point the point
+     */
+    public Point(Point point) {
+        this.x = point.x;
+        this.y = point.y;
+    }
+
+    /**
+     * Move.
+     *
+     * @param dx the dx
+     * @param dy the dy
+     */
+    void move(double dx, double dy) {
+        this.x += dx;
+        this.y += dy;
+    }
+
+    /**
+     * Distance to double.
+     *
+     * @param other the other
+     * @return the double
+     */
+    double distanceTo(Point other) {
+        return 0.0; //TODO
     }
 }
