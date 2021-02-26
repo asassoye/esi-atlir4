@@ -22,6 +22,9 @@
 
 package dev.asassoye.esi.atlir4.fxhello;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -34,7 +37,7 @@ public class HelloWorld extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         stage.setTitle("My first JavaFX App");
 
         BorderPane root = new BorderPane();
@@ -43,5 +46,17 @@ public class HelloWorld extends Application {
         Scene scene = new Scene(root, 250, 100);
         stage.setScene(scene);
         stage.show();
+    }
+
+    @Override
+    public void init() {
+        Logger logger = Logger.getLogger("log");
+        logger.log(Level.INFO, "Initialisation de l'écran");
+    }
+
+    @Override
+    public void stop() {
+        Logger logger = Logger.getLogger("log");
+        logger.log(Level.INFO, "Fin de l'écran");
     }
 }
