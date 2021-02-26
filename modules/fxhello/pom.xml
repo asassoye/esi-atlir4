@@ -31,7 +31,7 @@
                 <version>0.0.5</version>
 
                 <configuration>
-                    <mainClass>dev.asassoye.esi.atlir4.fxhello.HelloWorld</mainClass>
+                    <mainClass>dev.asassoye.esi.atlir4.fxhello.HelloWorldCheckBox</mainClass>
                 </configuration>
             </plugin>
         </plugins>
