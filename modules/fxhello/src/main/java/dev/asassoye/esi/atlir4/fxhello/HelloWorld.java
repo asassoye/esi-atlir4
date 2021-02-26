@@ -28,6 +28,8 @@ import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -42,6 +44,8 @@ public class HelloWorld extends Application {
 
         BorderPane root = new BorderPane();
         Text helloText = new Text("Hello world!");
+        helloText.setFont(Font.font("Times New Roman", 20));
+        helloText.setFill(Color.RED);
         root.setCenter(helloText);
         Scene scene = new Scene(root, 250, 100);
         stage.setScene(scene);
