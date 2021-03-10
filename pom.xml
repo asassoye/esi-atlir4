@@ -22,6 +22,7 @@
         <module>modules/blackjack</module>
         <module>modules/asciipaint</module>
         <module>modules/fxhello</module>
+        <module>modules/bmr</module>
     </modules>
 
     <dependencies>
