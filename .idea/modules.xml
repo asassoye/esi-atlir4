@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/modules/cards/atlir4.cards.iml" filepath="$PROJECT_DIR$/modules/cards/atlir4.cards.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/fxhello/atlir4.fxhello.iml" filepath="$PROJECT_DIR$/modules/fxhello/atlir4.fxhello.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/oo_base/atlir4.oo_base.iml" filepath="$PROJECT_DIR$/modules/oo_base/atlir4.oo_base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modules/skyjo/atlir4.skyjo.iml" filepath="$PROJECT_DIR$/modules/skyjo/atlir4.skyjo.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/utils/atlir4.utils.iml" filepath="$PROJECT_DIR$/modules/utils/atlir4.utils.iml" />
     </modules>
   </component>

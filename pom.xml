@@ -23,6 +23,7 @@
         <module>modules/asciipaint</module>
         <module>modules/fxhello</module>
         <module>modules/bmr</module>
+        <module>modules/skyjo</module>
     </modules>
 
     <dependencies>
