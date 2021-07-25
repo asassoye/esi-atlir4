@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/modules/asciipaint/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/modules/blackjack/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/bmr/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/modules/bmr/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/modules/cards/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/modules/fxhello/src/main/java" charset="UTF-8" />
