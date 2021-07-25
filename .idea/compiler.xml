@@ -11,6 +11,7 @@
         <module name="atlir4.bmr" />
         <module name="atlir4.fxhello" />
         <module name="atlir4.blackjack" />
+        <module name="atlir4.skyjo" />
         <module name="atlir4.utils" />
         <module name="atlir4.oo_base" />
       </profile>
@@ -23,6 +24,7 @@
       <module name="atlir4.cards" target="11" />
       <module name="atlir4.fxhello" target="11" />
       <module name="atlir4.oo_base" target="11" />
+      <module name="atlir4.skyjo" target="11" />
       <module name="atlir4.utils" target="11" />
     </bytecodeTargetLevel>
   </component>
