@@ -22,6 +22,8 @@
 
 package dev.asassoye.esi.atlir4.skyjo.model;
 
+import java.util.Objects;
+
 /**
  * Card class
  */
@@ -92,5 +94,18 @@ public class Card {
      */
     public void show() {
         this.visible = true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return this.value == card.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }
