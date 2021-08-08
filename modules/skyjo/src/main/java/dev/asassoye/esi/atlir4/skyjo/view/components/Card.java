@@ -31,12 +31,16 @@ import java.util.logging.Logger;
 
 public class Card extends Button {
     private static final Logger LOGGER = Logger.getLogger("card");
-    private final int id;
+    public static final double bHeight = 1195;
+    public static final double bWidth = 771;
     private final int value;
     private boolean visible;
+    private int x;
+    private int y;
 
-    public Card(int id, int value, boolean visible) {
-        this.id = id;
+    public Card(int x, int y, int value, boolean visible) {
+        this.x = x;
+        this.y = y;
         this.value = value;
         this.visible = visible;
 
@@ -51,11 +55,11 @@ public class Card extends Button {
 
         this.getStyleClass().add(classByValue(this.value));
 
-        this.minWidthProperty().bind(this.widthProperty().divide(0.645));
-        this.minWidthProperty().bind(this.heightProperty().multiply(0.645));
+        this.minHeightProperty().bind(this.widthProperty().divide(bWidth / bHeight));
+        this.minWidthProperty().bind(this.heightProperty().multiply(bWidth / bHeight));
 
         this.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-            LOGGER.log(Level.INFO, "Card clicked: #" + this.id + " (" + this.value + ")");
+            LOGGER.log(Level.INFO, "Card clicked: (" + this.x + this.y + ") (" + this.value + ")");
             if (this.visible) {
                 this.getStyleClass().add("hidden");
                 this.visible = false;
@@ -64,6 +68,34 @@ public class Card extends Button {
                 this.visible = true;
             }
         });
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void show() {
+        this.visible = true;
+    }
+
+    public void hide() {
+        this.visible = false;
     }
 
     public static String classByValue(int value) {

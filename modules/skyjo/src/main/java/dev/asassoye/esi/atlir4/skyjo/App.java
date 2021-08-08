@@ -23,10 +23,13 @@
 package dev.asassoye.esi.atlir4.skyjo;
 
 import dev.asassoye.esi.atlir4.skyjo.view.components.Card;
+import dev.asassoye.esi.atlir4.skyjo.view.components.CardTable;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class App extends Application {
     public static void main(String[] args) {
@@ -37,32 +40,28 @@ public class App extends Application {
     public void start(Stage stage) {
         stage.setTitle("Skyjo");
 
-        HBox box = new HBox();
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(0, 0, -2, false));
+        cards.add(new Card(0, 1, -2, false));
+        cards.add(new Card(0, 2, -2, false));
+        cards.add(new Card(1, 0, -2, false));
+        cards.add(new Card(1, 1, -2, false));
+        cards.add(new Card(1, 2, -2, false));
+        cards.add(new Card(2, 0, -2, false));
+        cards.add(new Card(2, 1, -2, false));
+        cards.add(new Card(2, 2, -2, false));
+        cards.add(new Card(3, 0, -2, false));
+        cards.add(new Card(3, 1, -2, false));
+        cards.add(new Card(3, 2, -2, false));
 
-        box.getChildren().add(new Card(0, -2, false));
-        box.getChildren().add(new Card(0, -2, false));
-        box.getChildren().add(new Card(0, -0, false));
-        box.getChildren().add(new Card(0, 1, false));
-        box.getChildren().add(new Card(0, 2, false));
-        box.getChildren().add(new Card(0, 3, false));
-        box.getChildren().add(new Card(0, 4, false));
-        box.getChildren().add(new Card(0, 5, false));
-        box.getChildren().add(new Card(0, 6, false));
-        box.getChildren().add(new Card(0, 7, false));
-        box.getChildren().add(new Card(0, 8, false));
-        box.getChildren().add(new Card(0, 9, false));
-        box.getChildren().add(new Card(0, 10, false));
-        box.getChildren().add(new Card(0, 11, false));
-        box.getChildren().add(new Card(0, 12, false));
+        CardTable cardTable = new CardTable(cards);
 
-        for (var child : box.getChildren()) {
-            Card card = (Card) child;
-            card.prefHeightProperty().bind(box.heightProperty());
-        }
-
-        Scene scene = new Scene(box, 1000, 200);
+        Scene scene = new Scene(cardTable, 1000, 1000);
         stage.setScene(scene);
         stage.show();
+
+        cardTable.prefHeightProperty().bind(scene.heightProperty());
+        cardTable.prefWidthProperty().bind(scene.widthProperty());
     }
 
 }
