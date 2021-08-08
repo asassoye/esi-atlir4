@@ -1,0 +1,104 @@
+/*
+ * Copyright (c) 2021 Andrew SASSOYE
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+package dev.asassoye.esi.atlir4.skyjo.view.components;
+
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class Card extends Button {
+    private static final Logger LOGGER = Logger.getLogger("card");
+    private final int id;
+    private final int value;
+    private boolean visible;
+
+    public Card(int id, int value, boolean visible) {
+        this.id = id;
+        this.value = value;
+        this.visible = visible;
+
+        this.getStyleClass().add("card");
+
+        URL url = getClass().getResource("/styles/components/card.css");
+        this.getStylesheets().add(url.toExternalForm());
+
+        if (!this.visible) {
+            this.getStyleClass().add("hidden");
+        }
+
+        this.getStyleClass().add(classByValue(this.value));
+
+        this.minWidthProperty().bind(this.widthProperty().divide(0.645));
+        this.minWidthProperty().bind(this.heightProperty().multiply(0.645));
+
+        this.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+            LOGGER.log(Level.INFO, "Card clicked: #" + this.id + " (" + this.value + ")");
+            if (this.visible) {
+                this.getStyleClass().add("hidden");
+                this.visible = false;
+            } else {
+                this.getStyleClass().remove("hidden");
+                this.visible = true;
+            }
+        });
+    }
+
+    public static String classByValue(int value) {
+        switch (value) {
+            case -2:
+                return "minTwo";
+            case -1:
+                return "minOne";
+            case 1:
+                return "one";
+            case 2:
+                return "two";
+            case 3:
+                return "three";
+            case 4:
+                return "four";
+            case 5:
+                return "five";
+            case 6:
+                return "six";
+            case 7:
+                return "seven";
+            case 8:
+                return "eight";
+            case 9:
+                return "nine";
+            case 10:
+                return "ten";
+            case 11:
+                return "eleven";
+            case 12:
+                return "twelve";
+            case 0:
+            default:
+                return "zero";
+        }
+    }
+}

@@ -22,9 +22,10 @@
 
 package dev.asassoye.esi.atlir4.skyjo;
 
+import dev.asassoye.esi.atlir4.skyjo.view.components.Card;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -36,9 +37,30 @@ public class App extends Application {
     public void start(Stage stage) {
         stage.setTitle("Skyjo");
 
-        Label label = new Label("Hello world!");
+        HBox box = new HBox();
 
-        Scene scene = new Scene(label, 450, 200);
+        box.getChildren().add(new Card(0, -2, false));
+        box.getChildren().add(new Card(0, -2, false));
+        box.getChildren().add(new Card(0, -0, false));
+        box.getChildren().add(new Card(0, 1, false));
+        box.getChildren().add(new Card(0, 2, false));
+        box.getChildren().add(new Card(0, 3, false));
+        box.getChildren().add(new Card(0, 4, false));
+        box.getChildren().add(new Card(0, 5, false));
+        box.getChildren().add(new Card(0, 6, false));
+        box.getChildren().add(new Card(0, 7, false));
+        box.getChildren().add(new Card(0, 8, false));
+        box.getChildren().add(new Card(0, 9, false));
+        box.getChildren().add(new Card(0, 10, false));
+        box.getChildren().add(new Card(0, 11, false));
+        box.getChildren().add(new Card(0, 12, false));
+
+        for (var child : box.getChildren()) {
+            Card card = (Card) child;
+            card.prefHeightProperty().bind(box.heightProperty());
+        }
+
+        Scene scene = new Scene(box, 1000, 200);
         stage.setScene(scene);
         stage.show();
     }
