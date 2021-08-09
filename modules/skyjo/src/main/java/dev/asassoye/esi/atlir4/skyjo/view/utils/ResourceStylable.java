@@ -20,15 +20,18 @@
  * SOFTWARE.
  */
 
-.cardTable {
-    -fx-background-color: #34495e;
-    -fx-border-width: 5px;
-    -fx-border-color: white;
-    -fx-border-style: solid;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 20, 0, 0, 0);
-    -fx-vgap: 10px;
-    -fx-hgap: 10px;
-    -fx-alignment: center;
+package dev.asassoye.esi.atlir4.skyjo.view.utils;
+
+import javafx.css.Styleable;
+import javafx.scene.layout.Region;
+
+import java.net.URL;
+
+public interface ResourceStylable extends Styleable {
+    default void applyStyles(String resource, Region node) {
+        URL url = getClass().getResource(resource);
+        if (url != null) {
+            node.getStylesheets().add(url.toExternalForm());
+        }
+    }
 }

@@ -23,7 +23,7 @@
 package dev.asassoye.esi.atlir4.skyjo;
 
 import dev.asassoye.esi.atlir4.skyjo.view.components.Card;
-import dev.asassoye.esi.atlir4.skyjo.view.components.CardTable;
+import dev.asassoye.esi.atlir4.skyjo.view.components.Game;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -42,26 +42,40 @@ public class App extends Application {
 
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(0, 0, -2, false));
-        cards.add(new Card(0, 1, -2, false));
-        cards.add(new Card(0, 2, -2, false));
-        cards.add(new Card(1, 0, -2, false));
-        cards.add(new Card(1, 1, -2, false));
-        cards.add(new Card(1, 2, -2, false));
-        cards.add(new Card(2, 0, -2, false));
-        cards.add(new Card(2, 1, -2, false));
-        cards.add(new Card(2, 2, -2, false));
-        cards.add(new Card(3, 0, -2, false));
-        cards.add(new Card(3, 1, -2, false));
-        cards.add(new Card(3, 2, -2, false));
+        cards.add(new Card(0, 1, 0, false));
+        cards.add(new Card(0, 2, 2, false));
+        cards.add(new Card(1, 0, 4, false));
+        cards.add(new Card(1, 1, 2, false));
+        cards.add(new Card(1, 2, 3, false));
+        cards.add(new Card(2, 0, 4, false));
+        cards.add(new Card(2, 1, 5, false));
+        cards.add(new Card(2, 2, 7, false));
+        cards.add(new Card(3, 0, 8, false));
+        cards.add(new Card(3, 1, 10, false));
+        cards.add(new Card(3, 2, 12, false));
 
-        CardTable cardTable = new CardTable(cards);
+        List<Card> cards2 = new ArrayList<>();
+        cards2.add(new Card(0, 0, -2, false));
+        cards2.add(new Card(0, 1, 0, false));
+        cards2.add(new Card(0, 2, 2, false));
+        cards2.add(new Card(1, 0, 4, false));
+        cards2.add(new Card(1, 1, 2, false));
+        cards2.add(new Card(1, 2, 3, false));
+        cards2.add(new Card(2, 0, 4, false));
+        cards2.add(new Card(2, 1, 5, false));
+        cards2.add(new Card(2, 2, 7, false));
+        cards2.add(new Card(3, 0, 8, false));
+        cards2.add(new Card(3, 1, 10, false));
+        cards2.add(new Card(3, 2, 12, false));
 
-        Scene scene = new Scene(cardTable, 1000, 1000);
+        Game cardTable = new Game("Andrew", "Constantin", cards, cards2);
+
+        Scene scene = new Scene(cardTable, 1200, 700);
         stage.setScene(scene);
         stage.show();
 
-        cardTable.prefHeightProperty().bind(scene.heightProperty());
-        cardTable.prefWidthProperty().bind(scene.widthProperty());
+        cardTable.minHeightProperty().bind(scene.heightProperty());
+        cardTable.minWidthProperty().bind(scene.widthProperty());
     }
 
 }

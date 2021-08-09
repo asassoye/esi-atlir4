@@ -20,15 +20,30 @@
  * SOFTWARE.
  */
 
-.cardTable {
-    -fx-background-color: #34495e;
-    -fx-border-width: 5px;
-    -fx-border-color: white;
-    -fx-border-style: solid;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 20, 0, 0, 0);
-    -fx-vgap: 10px;
-    -fx-hgap: 10px;
-    -fx-alignment: center;
+package dev.asassoye.esi.atlir4.skyjo.view.components;
+
+import dev.asassoye.esi.atlir4.skyjo.view.utils.ResourceStylable;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+
+import java.util.List;
+
+public class Player extends VBox implements ResourceStylable {
+    private final Label name;
+    private final CardTable cardTable;
+
+    public Player(String name, List<Card> table) {
+        applyStyles("/styles/components/player.css", this);
+        this.name = new Label(name);
+        this.cardTable = new CardTable(table);
+
+        this.getChildren().add(this.cardTable);
+        this.getChildren().add(this.name);
+
+        this.name.prefHeightProperty().bind(this.heightProperty().divide(12));
+        this.name.prefWidthProperty().bind(this.widthProperty());
+        this.name.getStyleClass().add("playerName");
+        this.cardTable.prefHeightProperty().bind(this.heightProperty().divide(12).multiply(11));
+        this.cardTable.prefWidthProperty().bind(this.widthProperty());
+    }
 }

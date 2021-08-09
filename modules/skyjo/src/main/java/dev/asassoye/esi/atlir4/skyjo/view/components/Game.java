@@ -23,30 +23,30 @@
 package dev.asassoye.esi.atlir4.skyjo.view.components;
 
 import dev.asassoye.esi.atlir4.skyjo.view.utils.ResourceStylable;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 import java.util.List;
 
-public class CardTable extends GridPane implements ResourceStylable {
-    public static final int COLUMNS = 4;
-    public static final int ROWS = 3;
-    public static final double bHeight = Card.bHeight * ROWS;
-    public static final double bWidth = Card.bHeight * COLUMNS;
-    public static final double gap = 10.0;
+public class Game extends VBox implements ResourceStylable {
+    private final Board board;
+    private final Label title;
 
+    public Game(String player1Name, String player2Name, List<Card> player1table, List<Card> player2table) {
+        this.board = new Board(player1Name, player2Name, player1table, player2table);
+        this.title = new Label("SKYJO");
 
-    public CardTable(List<Card> cards) {
-        this.getStyleClass().add("cardTable");
+        applyStyles("/styles/components/game.css", this);
+        this.getStyleClass().add("game");
 
-        applyStyles("/styles/components/cardtable.css", this);
+        this.getChildren().add(title);
+        this.getChildren().add(board);
 
-        for (var card : cards) {
-            this.add(card, card.getX(), card.getY());
-            card.prefHeightProperty().bind(this.heightProperty().divide(ROWS).subtract(gap * ROWS));
-            card.prefWidthProperty().bind(this.widthProperty().divide(COLUMNS).subtract(gap * COLUMNS));
-        }
+        this.board.minHeightProperty().bind(this.heightProperty().divide(12).multiply(10).subtract(20));
+        this.board.minWidthProperty().bind(this.widthProperty().subtract(20));
 
-        this.prefWidthProperty().bind(this.widthProperty().divide(bWidth / bHeight));
-        this.prefWidthProperty().bind(this.heightProperty().multiply(bWidth / bHeight));
+        this.title.minHeightProperty().bind(this.heightProperty().divide(12).multiply(2).subtract(20));
+        this.title.minWidthProperty().bind(this.widthProperty().subtract(20));
+        this.title.getStyleClass().add("gameTitle");
     }
 }

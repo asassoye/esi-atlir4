@@ -8,6 +8,7 @@
     <file url="file://$PROJECT_DIR$/modules/fxhello/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/modules/oo_base/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/modules/skyjo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/skyjo/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/modules/utils/src/main/java" charset="UTF-8" />
   </component>
 </project>

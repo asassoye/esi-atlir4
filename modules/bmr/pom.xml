@@ -48,31 +48,17 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <release>11</release>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.5</version>
-
-                <executions>
-                    <execution>
-                        <!-- Default configuration for running -->
-                        <id>default-cli</id>
-                        <configuration>
-                            <mainClass>dev.asassoye.esi.atlir4.bmr.App</mainClass>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <!-- Configuration for debugging -->
-                        <id>debug</id>
-                        <configuration>
-                            <options>
-                                <option>-agentlib:jdwp=transport=dt_socket,server=n,address=localhost:8000,suspend=y
-                                </option>
-                            </options>
-                            <mainClass>dev.asassoye.esi.atlir4.bmr.App</mainClass>
-                        </configuration>
-                    </execution>
-                </executions>
-
+                <version>0.0.4</version>
                 <configuration>
                     <mainClass>dev.asassoye.esi.atlir4.bmr.App</mainClass>
                 </configuration>

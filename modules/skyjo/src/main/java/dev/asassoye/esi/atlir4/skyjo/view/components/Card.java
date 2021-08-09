@@ -22,14 +22,14 @@
 
 package dev.asassoye.esi.atlir4.skyjo.view.components;
 
+import dev.asassoye.esi.atlir4.skyjo.view.utils.ResourceStylable;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
-import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Card extends Button {
+public class Card extends Button implements ResourceStylable {
     private static final Logger LOGGER = Logger.getLogger("card");
     public static final double bHeight = 1195;
     public static final double bWidth = 771;
@@ -45,18 +45,14 @@ public class Card extends Button {
         this.visible = visible;
 
         this.getStyleClass().add("card");
-
-        URL url = getClass().getResource("/styles/components/card.css");
-        this.getStylesheets().add(url.toExternalForm());
-
+        applyStyles("/styles/components/card.css", this);
         if (!this.visible) {
             this.getStyleClass().add("hidden");
         }
-
         this.getStyleClass().add(classByValue(this.value));
 
-        this.minHeightProperty().bind(this.widthProperty().divide(bWidth / bHeight));
-        this.minWidthProperty().bind(this.heightProperty().multiply(bWidth / bHeight));
+        this.prefHeightProperty().bind(this.widthProperty().divide(bWidth / bHeight));
+        this.prefWidthProperty().bind(this.heightProperty().multiply(bWidth / bHeight));
 
         this.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
             LOGGER.log(Level.INFO, "Card clicked: (" + this.x + this.y + ") (" + this.value + ")");

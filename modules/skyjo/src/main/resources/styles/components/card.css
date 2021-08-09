@@ -22,8 +22,10 @@
 
 .card {
     -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
     -fx-background-color: none;
     -fx-background-size: contain;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);
 }
 
 .card.minTwo {

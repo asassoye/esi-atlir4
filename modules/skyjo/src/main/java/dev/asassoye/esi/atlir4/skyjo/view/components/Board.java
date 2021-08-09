@@ -23,30 +23,32 @@
 package dev.asassoye.esi.atlir4.skyjo.view.components;
 
 import dev.asassoye.esi.atlir4.skyjo.view.utils.ResourceStylable;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 import java.util.List;
 
-public class CardTable extends GridPane implements ResourceStylable {
-    public static final int COLUMNS = 4;
-    public static final int ROWS = 3;
-    public static final double bHeight = Card.bHeight * ROWS;
-    public static final double bWidth = Card.bHeight * COLUMNS;
-    public static final double gap = 10.0;
+public class Board extends HBox implements ResourceStylable {
+    private final Player player1;
+    private final TableCenter tableCenter;
+    private final Player player2;
 
+    public Board(String player1Name, String player2Name, List<Card> player1table, List<Card> player2table) {
+        this.player1 = new Player(player1Name, player1table);
+        this.player2 = new Player(player2Name, player2table);
+        this.tableCenter = new TableCenter();
 
-    public CardTable(List<Card> cards) {
-        this.getStyleClass().add("cardTable");
+        applyStyles("/styles/components/board.css", this);
+        this.getStyleClass().add("board");
 
-        applyStyles("/styles/components/cardtable.css", this);
+        this.getChildren().add(player1);
+        this.getChildren().add(tableCenter);
+        this.getChildren().add(player2);
 
-        for (var card : cards) {
-            this.add(card, card.getX(), card.getY());
-            card.prefHeightProperty().bind(this.heightProperty().divide(ROWS).subtract(gap * ROWS));
-            card.prefWidthProperty().bind(this.widthProperty().divide(COLUMNS).subtract(gap * COLUMNS));
-        }
-
-        this.prefWidthProperty().bind(this.widthProperty().divide(bWidth / bHeight));
-        this.prefWidthProperty().bind(this.heightProperty().multiply(bWidth / bHeight));
+        this.player1.minHeightProperty().bind(this.heightProperty());
+        this.tableCenter.minHeightProperty().bind(this.heightProperty());
+        this.player2.minHeightProperty().bind(this.heightProperty());
+        this.player1.minWidthProperty().bind(this.widthProperty().divide(9).multiply(4));
+        this.tableCenter.minWidthProperty().bind(this.widthProperty().divide(9));
+        this.player2.minWidthProperty().bind(this.widthProperty().divide(9).multiply(4));
     }
 }

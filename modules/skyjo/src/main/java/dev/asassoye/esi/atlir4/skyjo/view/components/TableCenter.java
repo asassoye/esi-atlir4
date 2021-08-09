@@ -20,15 +20,27 @@
  * SOFTWARE.
  */
 
-.cardTable {
-    -fx-background-color: #34495e;
-    -fx-border-width: 5px;
-    -fx-border-color: white;
-    -fx-border-style: solid;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 20, 0, 0, 0);
-    -fx-vgap: 10px;
-    -fx-hgap: 10px;
-    -fx-alignment: center;
+package dev.asassoye.esi.atlir4.skyjo.view.components;
+
+import dev.asassoye.esi.atlir4.skyjo.view.utils.ResourceStylable;
+import javafx.scene.layout.VBox;
+
+public class TableCenter extends VBox implements ResourceStylable {
+    public Card withdraw;
+    public Card deckCard;
+
+    public TableCenter() {
+        this.withdraw = new Card(0, 0, 12, true);
+        this.deckCard = new Card(0, 0, -2, false);
+
+        this.withdraw.prefWidthProperty().bind(this.widthProperty());
+        this.deckCard.prefWidthProperty().bind(this.widthProperty());
+
+
+        this.getChildren().add(this.withdraw);
+        this.getChildren().add(this.deckCard);
+
+        applyStyles("/styles/components/tablecenter.css", this);
+        this.getStyleClass().add("tableCenter");
+    }
 }
