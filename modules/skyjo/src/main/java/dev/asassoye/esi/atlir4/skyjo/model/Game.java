@@ -22,13 +22,16 @@
 
 package dev.asassoye.esi.atlir4.skyjo.model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game {
+public class Game implements ModelInterface {
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private final List<Player> players;
-    private final Deck deck;
-    private final Deck discard;
+    private Deck deck;
+    private Deck discard;
     private GameStatus status;
     private Player playing;
     private Card chosenCard;
@@ -43,12 +46,24 @@ public class Game {
         this.chosenCard = null;
     }
 
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        this.pcs.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        this.pcs.removePropertyChangeListener(listener);
+    }
+
+
     public GameStatus getStatus() {
         return status;
     }
 
-    public void setStatus(GameStatus status) {
-        this.status = status;
+    public void setStatus(GameStatus newStatus) {
+        GameStatus oldStatus = this.status;
+        this.status = newStatus;
+
+        this.pcs.firePropertyChange("STATUS", oldStatus, newStatus);
     }
 
     public List<Player> getPlayers() {
@@ -130,22 +145,80 @@ public class Game {
                 playing.showCard(x, y);
                 if (playing.shownCards() == 2) {
                     if (playing == players.get(players.size() - 1)) {
+                        setPlaying(getMinimumPointsPlayer());
                         setStatus(GameStatus.CHOOSING_CARD);
                     } else {
                         switchToNextPlayer();
                     }
                 }
                 break;
-            case CHOOSING_CARD:
+            case CHOSEN_TO_DISCARD:
                 if (playing.getCard(x, y).isVisible()) {
                     throw new IllegalStateException("This card is already shown");
                 }
                 playing.showCard(x, y);
+
+                if (playing.isCompletelyReveled()) {
+                    revealAllPlayers();
+                    updateAllScores(playing, getMinimumPointsPlayer());
+                    setStatus(GameStatus.ROUND_OVER);
+                    return;
+                }
+
                 switchToNextPlayer();
                 break;
             default:
                 throw new IllegalStateException("It is not the moment to choose a card on the table");
         }
+    }
+
+    public void revealAllPlayers() {
+        for (var player : players) {
+            player.showAllCards();
+        }
+    }
+
+    public void updateAllScores(Player initiator, Player minPointsPlayer) {
+        for (var player : players) {
+            player.validatePoints(player == initiator && initiator != minPointsPlayer);
+        }
+    }
+
+    public boolean isGameOver() {
+        return getMaximumPointsPlayer().getTotalScore() >= 100;
+    }
+
+    public void next() {
+        this.deck = new Deck(Deck.basicDeck);
+        this.discard = new Deck();
+    }
+
+    public Player getMinimumPointsPlayer() {
+        Player minPlayer = null;
+        int minPoints = Integer.MAX_VALUE;
+
+        for (var player : players) {
+            if (player.getPoints() < minPoints) {
+                minPlayer = player;
+                minPoints = player.getPoints();
+            }
+        }
+
+        return minPlayer;
+    }
+
+    public Player getMaximumPointsPlayer() {
+        Player maxPlayer = null;
+        int maxPoints = Integer.MIN_VALUE;
+
+        for (var player : players) {
+            if (player.getPoints() > maxPoints) {
+                maxPlayer = player;
+                maxPoints = player.getPoints();
+            }
+        }
+
+        return maxPlayer;
     }
 
     public Deck getDeck() {

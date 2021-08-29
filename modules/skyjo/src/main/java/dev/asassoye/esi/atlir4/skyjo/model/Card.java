@@ -27,7 +27,7 @@ import java.util.Objects;
 /**
  * Card class
  */
-public class Card {
+public class Card implements CardInterface {
     /**
      * Value of the Card
      */

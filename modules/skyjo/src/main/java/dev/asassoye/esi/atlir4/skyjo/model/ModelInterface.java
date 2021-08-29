@@ -22,13 +22,17 @@
 
 package dev.asassoye.esi.atlir4.skyjo.model;
 
-public enum GameStatus {
-    NOT_STARTED,
-    CHOOSING_INIT_CARDS,
-    CHOOSING_CARD,
-    CHOSEN_FROM_DECK,
-    CHOSEN_FROM_DISCARD,
-    CHOSEN_TO_DISCARD,
-    ROUND_OVER,
-    GAME_OVER
+import java.beans.PropertyChangeListener;
+import java.util.List;
+
+public interface ModelInterface {
+    void addPropertyChangeListener(PropertyChangeListener listener);
+
+    void removePropertyChangeListener(PropertyChangeListener listener);
+
+    void addPlayer(String name);
+
+    void distributeCards();
+
+    List<? extends PlayerInterface> getPlayers();
 }

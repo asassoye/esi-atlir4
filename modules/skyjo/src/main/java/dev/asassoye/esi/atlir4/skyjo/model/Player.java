@@ -23,12 +23,13 @@
 package dev.asassoye.esi.atlir4.skyjo.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class Player {
-    public static final int COLUMNS = 4;
-    public static final int LINES = 3;
+public class Player implements PlayerInterface {
+
     private final int id;
+    private int totalScore;
     private final String name;
     private final Card[][] cards;
 
@@ -36,6 +37,7 @@ public class Player {
         this.id = id;
         this.name = name;
         this.cards = new Card[LINES][COLUMNS];
+        this.totalScore = 0;
     }
 
     public Player(int id) {
@@ -52,6 +54,19 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public void validatePoints(boolean doubled) {
+        if (!isCompletelyReveled()) {
+            throw new IllegalStateException("You cannot go to next round if you have not finished the board.");
+        }
+
+        totalScore += doubled ? getPoints() * 2 : getPoints();
+    }
+
+    public void next(Deck deck) {
+        cleanCards();
+        placeCards(deck);
     }
 
     public void placeCards(Deck deck) {
@@ -80,12 +95,27 @@ public class Player {
         }
     }
 
+    public void cleanCards() {
+        for (Card[] card : this.cards) {
+            Arrays.fill(card, null);
+        }
+    }
+
     public Card getCard(int x, int y) {
         return cards[y][x];
     }
 
     public void setCard(Card newCard, int x, int y) {
         cards[y][x] = newCard;
+    }
+
+    public void showAllCards() {
+        for (var y = 0; y < LINES; ++y) {
+            for (var x = 0; x < COLUMNS; ++x) {
+                Card card = getCard(x, y);
+                card.show();
+            }
+        }
     }
 
     public void showCard(int x, int y) {
@@ -186,5 +216,9 @@ public class Player {
 
     public int getId() {
         return id;
+    }
+
+    public int getTotalScore() {
+        return totalScore;
     }
 }

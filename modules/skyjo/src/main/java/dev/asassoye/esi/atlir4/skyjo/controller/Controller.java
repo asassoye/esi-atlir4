@@ -20,15 +20,22 @@
  * SOFTWARE.
  */
 
-package dev.asassoye.esi.atlir4.skyjo.model;
+package dev.asassoye.esi.atlir4.skyjo.controller;
 
-public enum GameStatus {
-    NOT_STARTED,
-    CHOOSING_INIT_CARDS,
-    CHOOSING_CARD,
-    CHOSEN_FROM_DECK,
-    CHOSEN_FROM_DISCARD,
-    CHOSEN_TO_DISCARD,
-    ROUND_OVER,
-    GAME_OVER
+import dev.asassoye.esi.atlir4.skyjo.model.ModelInterface;
+import dev.asassoye.esi.atlir4.skyjo.view.View;
+
+public class Controller {
+    private final ModelInterface model;
+    private final View view;
+
+    public Controller(ModelInterface model, View view) {
+        this.model = model;
+        this.view = view;
+        model.addPropertyChangeListener(view);
+
+        model.addPlayer("Player 1");
+        model.addPlayer("Player 2");
+        model.distributeCards();
+    }
 }

@@ -22,13 +22,10 @@
 
 package dev.asassoye.esi.atlir4.skyjo.model;
 
-public enum GameStatus {
-    NOT_STARTED,
-    CHOOSING_INIT_CARDS,
-    CHOOSING_CARD,
-    CHOSEN_FROM_DECK,
-    CHOSEN_FROM_DISCARD,
-    CHOSEN_TO_DISCARD,
-    ROUND_OVER,
-    GAME_OVER
+public interface CardInterface {
+    int getValue();
+
+    boolean isVisible();
+
+    boolean equals(Object o);
 }

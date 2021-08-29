@@ -22,14 +22,12 @@
 
 package dev.asassoye.esi.atlir4.skyjo;
 
-import dev.asassoye.esi.atlir4.skyjo.view.components.Card;
-import dev.asassoye.esi.atlir4.skyjo.view.components.Game;
+import dev.asassoye.esi.atlir4.skyjo.controller.Controller;
+import dev.asassoye.esi.atlir4.skyjo.model.Game;
+import dev.asassoye.esi.atlir4.skyjo.model.ModelInterface;
+import dev.asassoye.esi.atlir4.skyjo.view.View;
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class App extends Application {
     public static void main(String[] args) {
@@ -38,44 +36,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        stage.setTitle("Skyjo");
-
-        List<Card> cards = new ArrayList<>();
-        cards.add(new Card(0, 0, -2, false));
-        cards.add(new Card(0, 1, 0, false));
-        cards.add(new Card(0, 2, 2, false));
-        cards.add(new Card(1, 0, 4, false));
-        cards.add(new Card(1, 1, 2, false));
-        cards.add(new Card(1, 2, 3, false));
-        cards.add(new Card(2, 0, 4, false));
-        cards.add(new Card(2, 1, 5, false));
-        cards.add(new Card(2, 2, 7, false));
-        cards.add(new Card(3, 0, 8, false));
-        cards.add(new Card(3, 1, 10, false));
-        cards.add(new Card(3, 2, 12, false));
-
-        List<Card> cards2 = new ArrayList<>();
-        cards2.add(new Card(0, 0, -2, false));
-        cards2.add(new Card(0, 1, 0, false));
-        cards2.add(new Card(0, 2, 2, false));
-        cards2.add(new Card(1, 0, 4, false));
-        cards2.add(new Card(1, 1, 2, false));
-        cards2.add(new Card(1, 2, 3, false));
-        cards2.add(new Card(2, 0, 4, false));
-        cards2.add(new Card(2, 1, 5, false));
-        cards2.add(new Card(2, 2, 7, false));
-        cards2.add(new Card(3, 0, 8, false));
-        cards2.add(new Card(3, 1, 10, false));
-        cards2.add(new Card(3, 2, 12, false));
-
-        Game cardTable = new Game("Andrew", "Constantin", cards, cards2);
-
-        Scene scene = new Scene(cardTable, 1200, 700);
-        stage.setScene(scene);
-        stage.show();
-
-        cardTable.minHeightProperty().bind(scene.heightProperty());
-        cardTable.minWidthProperty().bind(scene.widthProperty());
+        ModelInterface model = new Game();
+        View view = new View(stage);
+        Controller controller = new Controller(model, view);
     }
 
 }
