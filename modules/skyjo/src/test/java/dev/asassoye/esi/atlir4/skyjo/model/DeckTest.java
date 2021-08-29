@@ -121,7 +121,7 @@ class DeckTest {
         }
 
         @Test
-        void shuffel() {
+        void shuffle() {
             Deck deck = new Deck();
             Deck deck2 = new Deck();
             var cards = new ArrayList<Card>();

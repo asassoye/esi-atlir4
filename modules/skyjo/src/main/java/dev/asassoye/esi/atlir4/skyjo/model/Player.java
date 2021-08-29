@@ -42,6 +42,14 @@ public class Player {
         this(id, String.format("Player %d", id));
     }
 
+    @Override
+    public String toString() {
+        return "Player{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
     public String getName() {
         return name;
     }
@@ -88,6 +96,18 @@ public class Player {
         }
 
         card.show();
+    }
+
+    public int shownCards() {
+        int total = 0;
+        for (var line : cards) {
+            for (var card : line) {
+                if (card.isVisible()) {
+                    total++;
+                }
+            }
+        }
+        return total;
     }
 
     public void deleteFullLines() {
@@ -143,6 +163,7 @@ public class Player {
     public Card exchangeCard(Card newCard, int x, int y) {
         Card old = getCard(x, y);
         setCard(newCard, x, y);
+        newCard.show();
 
         return old;
     }
