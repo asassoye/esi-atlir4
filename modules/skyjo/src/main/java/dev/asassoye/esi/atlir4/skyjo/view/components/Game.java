@@ -22,31 +22,72 @@
 
 package dev.asassoye.esi.atlir4.skyjo.view.components;
 
+import dev.asassoye.esi.atlir4.skyjo.model.CardInterface;
+import dev.asassoye.esi.atlir4.skyjo.model.PlayerInterface;
 import dev.asassoye.esi.atlir4.skyjo.view.utils.ResourceStylable;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-
-import java.util.List;
 
 public class Game extends VBox implements ResourceStylable {
     private final Board board;
     private final Label title;
+    private final Label info;
 
-    public Game(String player1Name, String player2Name, List<Card> player1table, List<Card> player2table) {
-        this.board = new Board(player1Name, player2Name, player1table, player2table);
+    public Game(PlayerInterface player1, PlayerInterface player2) {
+        this.board = new Board(player1, player2);
         this.title = new Label("SKYJO");
+        this.info = new Label("INIT");
 
         applyStyles("/styles/components/game.css", this);
         this.getStyleClass().add("game");
 
         this.getChildren().add(title);
         this.getChildren().add(board);
+        this.getChildren().add(info);
 
-        this.board.minHeightProperty().bind(this.heightProperty().divide(12).multiply(10).subtract(20));
+        this.board.minHeightProperty().bind(this.heightProperty().divide(12).multiply(9).subtract(20));
         this.board.minWidthProperty().bind(this.widthProperty().subtract(20));
 
         this.title.minHeightProperty().bind(this.heightProperty().divide(12).multiply(2).subtract(20));
         this.title.minWidthProperty().bind(this.widthProperty().subtract(20));
         this.title.getStyleClass().add("gameTitle");
+
+        this.info.minHeightProperty().bind(this.heightProperty().divide(12).multiply(1).subtract(20));
+        this.info.minWidthProperty().bind(this.widthProperty().subtract(20));
+        this.info.getStyleClass().add("gameInfo");
+    }
+
+    public void setInfo(String info) {
+        this.info.setText(info);
+    }
+
+    public void setPlaying(int id) {
+        board.setPlaying(id);
+    }
+
+    public void updateDeckCard(CardInterface card) {
+        board.updateDeckCard(card);
+    }
+
+    public void updateWithdraw(CardInterface card) {
+        board.updateWithdraw(card);
+    }
+
+    public void connectChooseTableCardAction(EventHandler<MouseEvent> eventHandler) {
+        this.board.connectChooseTableCardAction(eventHandler);
+    }
+
+    public void connectChooseDiscardAction(EventHandler<MouseEvent> eventHandler) {
+        board.connectChooseDiscardAction(eventHandler);
+    }
+
+    public void connectChooseDeckAction(EventHandler<MouseEvent> eventHandler) {
+        board.connectChooseDeckAction(eventHandler);
+    }
+
+    public void update(PlayerInterface player1, PlayerInterface player2) {
+        this.board.update(player1, player2);
     }
 }

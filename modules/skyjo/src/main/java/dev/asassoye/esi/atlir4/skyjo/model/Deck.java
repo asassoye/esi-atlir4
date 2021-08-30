@@ -138,6 +138,14 @@ public class Deck {
         return card;
     }
 
+    public Card top() {
+        if (this.size() == 0) {
+            return null;
+        }
+
+        return this.cards.get(this.size() - 1);
+    }
+
     /**
      * Count how many cards have a certain value
      *

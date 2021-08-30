@@ -35,4 +35,18 @@ public interface ModelInterface {
     void distributeCards();
 
     List<? extends PlayerInterface> getPlayers();
+
+    void chooseTableCard(int x, int y);
+
+    void chooseDiscard();
+
+    PlayerInterface getPlaying();
+
+    GameStatus getStatus();
+
+    String getInfo();
+
+    CardInterface getDeckCard();
+
+    CardInterface getDiscardCard();
 }

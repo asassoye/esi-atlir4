@@ -22,18 +22,19 @@
 
 package dev.asassoye.esi.atlir4.skyjo.view.components;
 
+import dev.asassoye.esi.atlir4.skyjo.model.CardInterface;
 import dev.asassoye.esi.atlir4.skyjo.view.utils.ResourceStylable;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Card extends Button implements ResourceStylable {
     private static final Logger LOGGER = Logger.getLogger("card");
     public static final double bHeight = 1195;
     public static final double bWidth = 771;
-    private final int value;
+    private int value;
     private boolean visible;
     private int x;
     private int y;
@@ -41,29 +42,31 @@ public class Card extends Button implements ResourceStylable {
     public Card(int x, int y, int value, boolean visible) {
         this.x = x;
         this.y = y;
-        this.value = value;
-        this.visible = visible;
+        setValue(value, true);
+        setVisibility(visible, true);
 
         this.getStyleClass().add("card");
         applyStyles("/styles/components/card.css", this);
-        if (!this.visible) {
-            this.getStyleClass().add("hidden");
-        }
-        this.getStyleClass().add(classByValue(this.value));
 
         this.prefHeightProperty().bind(this.widthProperty().divide(bWidth / bHeight));
         this.prefWidthProperty().bind(this.heightProperty().multiply(bWidth / bHeight));
+    }
 
-        this.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-            LOGGER.log(Level.INFO, "Card clicked: (" + this.x + this.y + ") (" + this.value + ")");
-            if (this.visible) {
-                this.getStyleClass().add("hidden");
-                this.visible = false;
-            } else {
-                this.getStyleClass().remove("hidden");
-                this.visible = true;
-            }
-        });
+    public Card(CardInterface card, int x, int y) {
+        this(x, y, card.getValue(), card.isVisible());
+    }
+
+    public void connectChooseTableCardAction(EventHandler<MouseEvent> eventHandler) {
+        this.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+    }
+
+    public void update(int value, boolean visible) {
+        setValue(value);
+        setVisibility(visible);
+    }
+
+    public void update(CardInterface card) {
+        update(card.getValue(), card.isVisible());
     }
 
     public int getX() {
@@ -86,12 +89,50 @@ public class Card extends Button implements ResourceStylable {
         return value;
     }
 
+    public void setValue(int newValue, boolean init) {
+        if (newValue != this.value || init) {
+            this.getStyleClass().remove(classByValue(this.value));
+            this.value = newValue;
+            this.getStyleClass().add(classByValue(this.value));
+        }
+    }
+
+    public void setValue(int newValue) {
+        setValue(newValue, false);
+    }
+
     public void show() {
-        this.visible = true;
+        show(false);
+    }
+
+    public void show(boolean init) {
+        if (!this.visible || init) {
+            this.getStyleClass().remove("hidden");
+            this.visible = true;
+        }
+    }
+
+    public void setVisibility(boolean visible, boolean init) {
+        if (visible) {
+            show(init);
+        } else {
+            hide(init);
+        }
+    }
+
+    public void setVisibility(boolean visible) {
+        setVisibility(visible, false);
     }
 
     public void hide() {
-        this.visible = false;
+        hide(false);
+    }
+
+    public void hide(boolean init) {
+        if (this.visible || init) {
+            this.getStyleClass().add("hidden");
+            this.visible = false;
+        }
     }
 
     public static String classByValue(int value) {

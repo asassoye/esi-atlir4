@@ -24,10 +24,15 @@ package dev.asassoye.esi.atlir4.skyjo.controller;
 
 import dev.asassoye.esi.atlir4.skyjo.model.ModelInterface;
 import dev.asassoye.esi.atlir4.skyjo.view.View;
+import dev.asassoye.esi.atlir4.skyjo.view.components.Card;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 
 public class Controller {
     private final ModelInterface model;
     private final View view;
+    private final EventHandler<MouseEvent> chooseTableCardAction;
+    private final EventHandler<MouseEvent> chooseDiscardAction;
 
     public Controller(ModelInterface model, View view) {
         this.model = model;
@@ -37,5 +42,17 @@ public class Controller {
         model.addPlayer("Player 1");
         model.addPlayer("Player 2");
         model.distributeCards();
+
+        this.chooseTableCardAction = (mouseEvent) -> {
+            Card source = (Card) mouseEvent.getSource();
+            int x = source.getX();
+            int y = source.getY();
+            model.chooseTableCard(x, y);
+        };
+
+        this.chooseDiscardAction = (mouseEvent) -> model.chooseDiscard();
+
+        view.connectChooseTableCardAction(chooseTableCardAction);
+        view.connectChooseDiscardAction(chooseDiscardAction);
     }
 }

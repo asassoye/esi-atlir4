@@ -26,64 +26,91 @@ import dev.asassoye.esi.atlir4.skyjo.model.CardInterface;
 import dev.asassoye.esi.atlir4.skyjo.model.GameStatus;
 import dev.asassoye.esi.atlir4.skyjo.model.ModelInterface;
 import dev.asassoye.esi.atlir4.skyjo.model.PlayerInterface;
-import dev.asassoye.esi.atlir4.skyjo.view.components.Card;
 import dev.asassoye.esi.atlir4.skyjo.view.components.Game;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class View implements PropertyChangeListener {
     private final Stage primaryStage;
     private Scene scene;
-    private Game cardTable;
+    private Game game;
+    private Consumer<MouseEvent> chooseTableCardAction;
+    private GameStatus status;
 
     public View(Stage stage) {
         this.primaryStage = stage;
-        this.cardTable = null;
+        this.game = null;
         stage.setTitle("Skyjo");
     }
 
-    public static List<Card> generateCardList(PlayerInterface player) {
-        List<Card> cards2 = new ArrayList<>();
-        for (var x = 0; x < PlayerInterface.COLUMNS; ++x) {
-            for (var y = 0; y < PlayerInterface.LINES; ++y) {
-                CardInterface card = player.getCard(x, y);
-                cards2.add(new Card(x, y, card.getValue(), card.isVisible()));
-            }
-        }
-        return cards2;
-    }
-
-    public void showBoard(List<? extends PlayerInterface> players) {
+    public void createBoard(List<? extends PlayerInterface> players, CardInterface deck, CardInterface withdraw) {
         PlayerInterface player1 = players.get(0);
-        List<Card> cards = generateCardList(player1);
-
         PlayerInterface player2 = players.get(1);
-        List<Card> cards2 = generateCardList(player2);
 
+        this.game = new Game(player1, player2);
+        game.updateDeckCard(deck);
+        game.updateWithdraw(withdraw);
 
-        this.cardTable = new Game(player1.getName(), player2.getName(), cards, cards2);
-
-        this.scene = new Scene(cardTable, 1200, 700);
-        cardTable.minHeightProperty().bind(scene.heightProperty());
-        cardTable.minWidthProperty().bind(scene.widthProperty());
+        this.scene = new Scene(game, 1200, 700);
+        game.minHeightProperty().bind(scene.heightProperty());
+        game.minWidthProperty().bind(scene.widthProperty());
 
         this.primaryStage.setScene(this.scene);
         this.primaryStage.show();
+    }
+
+    public void connectChooseTableCardAction(EventHandler<MouseEvent> eventHandler) {
+        this.game.connectChooseTableCardAction(eventHandler);
+    }
+
+    public void connectChooseDiscardAction(EventHandler<MouseEvent> eventHandler) {
+        game.connectChooseDiscardAction(eventHandler);
+    }
+
+    public void connectChooseDeckAction(EventHandler<MouseEvent> eventHandler) {
+        game.connectChooseDeckAction(eventHandler);
+    }
+
+    public void updateBoard(List<? extends PlayerInterface> players) {
+        PlayerInterface player1 = players.get(0);
+        PlayerInterface player2 = players.get(1);
+
+        this.game.update(player1, player2);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         ModelInterface model = (ModelInterface) evt.getSource();
 
-        if (evt.getPropertyName().equals("STATUS")) {
-            if (evt.getNewValue() == GameStatus.CHOOSING_INIT_CARDS) {
-                showBoard(model.getPlayers());
-            }
+        switch (evt.getPropertyName()) {
+            case "STATUS":
+                status = (GameStatus) evt.getNewValue();
+                if (evt.getNewValue() == GameStatus.CHOOSING_INIT_CARDS) {
+                    createBoard(model.getPlayers(), model.getDeckCard(), model.getDiscardCard());
+                    this.game.setPlaying(model.getPlaying().getId());
+                }
+                game.setInfo(model.getInfo());
+                break;
+            case "BOARD":
+                updateBoard(model.getPlayers());
+                break;
+            case "PLAYING":
+                var playing = (PlayerInterface) evt.getNewValue();
+                if (this.game != null) {
+                    this.game.setPlaying(playing.getId());
+                    game.setInfo(model.getInfo());
+                }
+                break;
+            case "DISCARD":
+                game.updateWithdraw(model.getDiscardCard());
+                break;
         }
     }
 }

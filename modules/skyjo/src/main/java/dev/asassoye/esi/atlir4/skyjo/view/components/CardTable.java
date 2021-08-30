@@ -22,9 +22,13 @@
 
 package dev.asassoye.esi.atlir4.skyjo.view.components;
 
+import dev.asassoye.esi.atlir4.skyjo.model.CardInterface;
 import dev.asassoye.esi.atlir4.skyjo.view.utils.ResourceStylable;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardTable extends GridPane implements ResourceStylable {
@@ -34,19 +38,70 @@ public class CardTable extends GridPane implements ResourceStylable {
     public static final double bWidth = Card.bHeight * COLUMNS;
     public static final double gap = 10.0;
 
+    private final List<Card> cards;
 
-    public CardTable(List<Card> cards) {
+    public CardTable() {
+        this.cards = new ArrayList<>();
         this.getStyleClass().add("cardTable");
 
         applyStyles("/styles/components/cardtable.css", this);
 
-        for (var card : cards) {
-            this.add(card, card.getX(), card.getY());
-            card.prefHeightProperty().bind(this.heightProperty().divide(ROWS).subtract(gap * ROWS));
-            card.prefWidthProperty().bind(this.widthProperty().divide(COLUMNS).subtract(gap * COLUMNS));
-        }
-
         this.prefWidthProperty().bind(this.widthProperty().divide(bWidth / bHeight));
         this.prefWidthProperty().bind(this.heightProperty().multiply(bWidth / bHeight));
+    }
+
+    public void connectChooseTableCardAction(EventHandler<MouseEvent> eventHandler) {
+        for (var card : cards) {
+            card.connectChooseTableCardAction(eventHandler);
+        }
+    }
+
+    public void addCard(Card card) {
+        this.cards.add(card);
+        this.add(card, card.getX(), card.getY());
+        card.prefHeightProperty().bind(this.heightProperty().divide(ROWS).subtract(gap * ROWS));
+        card.prefWidthProperty().bind(this.widthProperty().divide(COLUMNS).subtract(gap * COLUMNS));
+    }
+
+    public void addCard(CardInterface card, int x, int y) {
+        addCard(new Card(x, y, card.getValue(), card.isVisible()));
+    }
+
+    public void addCards(List<Card> cards) {
+        for (var card : cards) {
+            addCard(card);
+        }
+    }
+
+    public void removeCard(Card card) {
+        this.getChildren().remove(card);
+        this.cards.remove(card);
+    }
+
+    public Card getCard(int x, int y) {
+        for (var card : cards) {
+            if (card != null) {
+                if (card.getX() == x && card.getY() == y) {
+                    return card;
+                }
+            }
+        }
+        return null;
+    }
+
+    public void updateCard(CardInterface card, int x, int y) {
+        Card cardNode = getCard(x, y);
+
+        if (cardNode != null) {
+            if (card == null) {
+                removeCard(cardNode);
+            } else {
+                cardNode.update(card);
+            }
+        } else {
+            if (card != null) {
+                addCard(card, x, y);
+            }
+        }
     }
 }

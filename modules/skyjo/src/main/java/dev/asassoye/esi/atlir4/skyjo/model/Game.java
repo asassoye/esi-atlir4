@@ -115,11 +115,10 @@ public class Game implements ModelInterface {
         setPlaying(nextPlayer());
 
         if (playing.isCompletelyReveled()) {
-            setStatus(GameStatus.GAME_OVER);
-        } else {
-            setStatus(GameStatus.CHOOSING_CARD);
+            revealAllPlayers();
+            updateAllScores(playing, getMinimumPointsPlayer());
+            setStatus(GameStatus.ROUND_OVER);
         }
-
     }
 
     public void distributeCards() {
@@ -135,6 +134,12 @@ public class Game implements ModelInterface {
             player.placeCards(deck);
         }
 
+        Card discardCard = deck.pop();
+        discardCard.show();
+
+        discard.add(discardCard);
+        discard.add(discardCard);
+
         setPlaying(players.get(0));
         setStatus(GameStatus.CHOOSING_INIT_CARDS);
     }
@@ -143,6 +148,7 @@ public class Game implements ModelInterface {
         switch (status) {
             case CHOOSING_INIT_CARDS:
                 playing.showCard(x, y);
+
                 if (playing.shownCards() == 2) {
                     if (playing == players.get(players.size() - 1)) {
                         setPlaying(getMinimumPointsPlayer());
@@ -157,19 +163,34 @@ public class Game implements ModelInterface {
                     throw new IllegalStateException("This card is already shown");
                 }
                 playing.showCard(x, y);
-
-                if (playing.isCompletelyReveled()) {
-                    revealAllPlayers();
-                    updateAllScores(playing, getMinimumPointsPlayer());
-                    setStatus(GameStatus.ROUND_OVER);
-                    return;
-                }
+                switchToNextPlayer();
+                break;
+            case CHOSEN_FROM_DISCARD:
+                Card exchanged = playing.exchangeCard(chosenCard, x, y);
+                exchanged.show();
+                discard.add(exchanged);
+                this.pcs.firePropertyChange("DISCARD", null, discard.top());
+                chosenCard = null;
+                setStatus(GameStatus.CHOOSING_CARD);
 
                 switchToNextPlayer();
+
                 break;
             default:
                 throw new IllegalStateException("It is not the moment to choose a card on the table");
         }
+        this.pcs.firePropertyChange("BOARD", null, this);
+    }
+
+    public void chooseDiscard() {
+        if (status == GameStatus.CHOOSING_CARD) {
+            chosenCard = discard.pop();
+            this.pcs.firePropertyChange("DISCARD", null, discard.top());
+            setStatus(GameStatus.CHOSEN_FROM_DISCARD);
+            return;
+        }
+
+        throw new IllegalStateException("It is not the moment to choose de discard.");
     }
 
     public void revealAllPlayers() {
@@ -242,6 +263,42 @@ public class Game implements ModelInterface {
     }
 
     public void setPlaying(Player playing) {
+        var old = this.playing;
         this.playing = playing;
+        this.pcs.firePropertyChange("PLAYING", old, this.playing);
+    }
+
+    @Override
+    public String getInfo() {
+        switch (status) {
+            case NOT_STARTED:
+                return "La partie n'a pas encore commencée.";
+            case CHOOSING_INIT_CARDS:
+                return String.format("%s, veuillez retourner deux cartes pour commencer la partie.", playing.getName());
+            case CHOOSING_CARD:
+                return String.format("%s, veuillez prendre une carte dans le deck ou dans la defausse.", playing.getName());
+            case CHOSEN_FROM_DISCARD:
+                return String.format("%s, que voulez-vous où voulez-vous placer la carte de la défausse de valeur %d?", playing.getName(), chosenCard.getValue());
+            case CHOSEN_FROM_DECK:
+                return String.format("%s, que voulez-vous où voulez-vous placer la carte du deck de valeur %d?", playing.getName(), chosenCard.getValue());
+            case CHOSEN_TO_DISCARD:
+                return String.format("%s, vous avez mis la carte dans la défausse. Veuillez choisir une carte a retourner", playing.getName());
+            case ROUND_OVER:
+                return String.format("Le tour est terminé. Le meilleur joueur est actuellement %s", getMinimumPointsPlayer().getName());
+            case GAME_OVER:
+                return String.format("La partie est terminée. %s a gagné", getMinimumPointsPlayer().getName());
+            default:
+        }
+        return "Etat inconnu.";
+    }
+
+    @Override
+    public CardInterface getDeckCard() {
+        return deck.top();
+    }
+
+    @Override
+    public CardInterface getDiscardCard() {
+        return discard.top();
     }
 }

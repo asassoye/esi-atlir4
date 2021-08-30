@@ -22,7 +22,10 @@
 
 package dev.asassoye.esi.atlir4.skyjo.view.components;
 
+import dev.asassoye.esi.atlir4.skyjo.model.CardInterface;
 import dev.asassoye.esi.atlir4.skyjo.view.utils.ResourceStylable;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 public class TableCenter extends VBox implements ResourceStylable {
@@ -42,5 +45,21 @@ public class TableCenter extends VBox implements ResourceStylable {
 
         applyStyles("/styles/components/tablecenter.css", this);
         this.getStyleClass().add("tableCenter");
+    }
+
+    public void connectChooseDiscardAction(EventHandler<MouseEvent> eventHandler) {
+        withdraw.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+    }
+
+    public void connectChooseDeckAction(EventHandler<MouseEvent> eventHandler) {
+        deckCard.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+    }
+
+    public void setDeckCard(CardInterface card) {
+        deckCard.update(card);
+    }
+
+    public void setWithdraw(CardInterface card) {
+        withdraw.update(card);
     }
 }

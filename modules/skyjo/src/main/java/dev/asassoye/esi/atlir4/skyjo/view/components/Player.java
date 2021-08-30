@@ -22,28 +22,45 @@
 
 package dev.asassoye.esi.atlir4.skyjo.view.components;
 
+import dev.asassoye.esi.atlir4.skyjo.model.PlayerInterface;
 import dev.asassoye.esi.atlir4.skyjo.view.utils.ResourceStylable;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-
-import java.util.List;
 
 public class Player extends VBox implements ResourceStylable {
     private final Label name;
     private final CardTable cardTable;
 
-    public Player(String name, List<Card> table) {
+    public Player(PlayerInterface player) {
         applyStyles("/styles/components/player.css", this);
-        this.name = new Label(name);
-        this.cardTable = new CardTable(table);
+        this.name = new Label(player.getName());
+        this.cardTable = new CardTable();
 
         this.getChildren().add(this.cardTable);
         this.getChildren().add(this.name);
+
+        update(player);
 
         this.name.prefHeightProperty().bind(this.heightProperty().divide(12));
         this.name.prefWidthProperty().bind(this.widthProperty());
         this.name.getStyleClass().add("playerName");
         this.cardTable.prefHeightProperty().bind(this.heightProperty().divide(12).multiply(11));
         this.cardTable.prefWidthProperty().bind(this.widthProperty());
+    }
+
+    public void connectChooseTableCardAction(EventHandler<MouseEvent> eventHandler) {
+        cardTable.connectChooseTableCardAction(eventHandler);
+    }
+
+    public void update(PlayerInterface player) {
+        for (var x = 0; x < PlayerInterface.COLUMNS; ++x) {
+            for (var y = 0; y < PlayerInterface.LINES; ++y) {
+                cardTable.updateCard(player.getCard(x, y), x, y);
+            }
+        }
+
+        name.setText(String.format("%s - %d (%d)", player.getName(), player.getPoints(), player.getTotalScore()));
     }
 }

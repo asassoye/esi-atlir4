@@ -31,3 +31,10 @@
     -fx-font-size: 40;
     -fx-text-fill: #ecf0f1;
 }
+
+.gameInfo {
+    -fx-alignment: center;
+    -fx-font-weight: 400;
+    -fx-font-size: 20;
+    -fx-text-fill: #ecf0f1;
+}
