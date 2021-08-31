@@ -29,8 +29,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 public class TableCenter extends VBox implements ResourceStylable {
-    public Card discard;
-    public Card deckCard;
+    public final Card discard;
+    public final Card deckCard;
 
     public TableCenter() {
         this.discard = new Card(0, 0, 12, true);

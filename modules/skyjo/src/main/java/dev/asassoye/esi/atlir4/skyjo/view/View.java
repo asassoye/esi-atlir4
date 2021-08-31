@@ -42,7 +42,6 @@ import java.util.List;
  */
 public class View implements PropertyChangeListener {
     private final Stage primaryStage;
-    private Scene scene;
     private Game game;
 
     /**
@@ -71,11 +70,15 @@ public class View implements PropertyChangeListener {
         game.updateDeckCard(deck);
         game.updateDiscard(discard);
 
-        this.scene = new Scene(game, 1200, 700);
+        Scene scene = new Scene(game, 1200, 700);
         game.minHeightProperty().bind(scene.heightProperty());
         game.minWidthProperty().bind(scene.widthProperty());
 
-        this.primaryStage.setScene(this.scene);
+        this.primaryStage.setScene(scene);
+
+    }
+
+    public void show() {
         this.primaryStage.show();
     }
 

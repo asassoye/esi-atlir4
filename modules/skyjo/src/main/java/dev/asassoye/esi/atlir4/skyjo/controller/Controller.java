@@ -34,9 +34,6 @@ import javafx.scene.input.MouseEvent;
 public class Controller {
     private final ModelInterface model;
     private final View view;
-    private final EventHandler<MouseEvent> chooseTableCardAction;
-    private final EventHandler<MouseEvent> chooseDiscardAction;
-    private final EventHandler<MouseEvent> chooseDeckAction;
 
     /**
      * Instantiates a new Controller.
@@ -53,7 +50,7 @@ public class Controller {
         model.addPlayer("Player 2");
         model.distributeCards();
 
-        this.chooseTableCardAction = (mouseEvent) -> {
+        EventHandler<MouseEvent> chooseTableCardAction = (mouseEvent) -> {
             Card source = (Card) mouseEvent.getSource();
             int x = source.getX();
             int y = source.getY();
@@ -65,7 +62,7 @@ public class Controller {
 
         };
 
-        this.chooseDiscardAction = (mouseEvent) -> {
+        EventHandler<MouseEvent> chooseDiscardAction = (mouseEvent) -> {
             try {
                 model.chooseDiscard();
             } catch (Exception e) {
@@ -73,7 +70,7 @@ public class Controller {
             }
 
         };
-        this.chooseDeckAction = (mouseEvent) -> {
+        EventHandler<MouseEvent> chooseDeckAction = (mouseEvent) -> {
             try {
                 model.chooseDeck();
             } catch (Exception e) {
@@ -85,5 +82,17 @@ public class Controller {
         view.connectChooseTableCardAction(chooseTableCardAction);
         view.connectChooseDiscardAction(chooseDiscardAction);
         view.connectChooseDeckAction(chooseDeckAction);
+    }
+
+    public void start() {
+        view.show();
+    }
+
+    public ModelInterface getModel() {
+        return model;
+    }
+
+    public View getView() {
+        return view;
     }
 }

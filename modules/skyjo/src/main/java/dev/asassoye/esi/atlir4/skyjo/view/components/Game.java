@@ -35,7 +35,6 @@ import javafx.scene.layout.VBox;
  */
 public class Game extends VBox implements ResourceStylable {
     private final Board board;
-    private final Label title;
     private final Label info;
 
     /**
@@ -46,7 +45,7 @@ public class Game extends VBox implements ResourceStylable {
      */
     public Game(PlayerInterface player1, PlayerInterface player2) {
         this.board = new Board(player1, player2);
-        this.title = new Label("SKYJO");
+        Label title = new Label("SKYJO");
         this.info = new Label("INIT");
 
         applyStyles("/styles/components/game.css", this);
@@ -59,9 +58,9 @@ public class Game extends VBox implements ResourceStylable {
         this.board.minHeightProperty().bind(this.heightProperty().divide(12).multiply(9).subtract(20));
         this.board.minWidthProperty().bind(this.widthProperty().subtract(20));
 
-        this.title.minHeightProperty().bind(this.heightProperty().divide(12).multiply(2).subtract(20));
-        this.title.minWidthProperty().bind(this.widthProperty().subtract(20));
-        this.title.getStyleClass().add("gameTitle");
+        title.minHeightProperty().bind(this.heightProperty().divide(12).multiply(2).subtract(20));
+        title.minWidthProperty().bind(this.widthProperty().subtract(20));
+        title.getStyleClass().add("gameTitle");
 
         this.info.minHeightProperty().bind(this.heightProperty().divide(12).multiply(1).subtract(20));
         this.info.minWidthProperty().bind(this.widthProperty().subtract(20));

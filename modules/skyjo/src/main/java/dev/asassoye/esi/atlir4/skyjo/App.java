@@ -39,6 +39,7 @@ public class App extends Application {
         ModelInterface model = new Game();
         View view = new View(stage);
         Controller controller = new Controller(model, view);
+        controller.start();
     }
 
 }
