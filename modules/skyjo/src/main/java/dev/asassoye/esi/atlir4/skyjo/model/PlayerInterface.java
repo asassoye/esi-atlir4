@@ -22,17 +22,53 @@
 
 package dev.asassoye.esi.atlir4.skyjo.model;
 
+/**
+ * The interface Player interface.
+ */
 public interface PlayerInterface {
+    /**
+     * The number of columns of a player table
+     */
     int COLUMNS = 4;
+    /**
+     * The number of lines of a player table
+     */
     int LINES = 3;
 
+    /**
+     * Gets id of the player.
+     *
+     * @return the id of the player
+     */
     int getId();
 
+    /**
+     * Gets the player's name.
+     *
+     * @return the name of the player
+     */
     String getName();
 
+    /**
+     * Gets points. (total of visible cards)
+     *
+     * @return the points of the player
+     */
     int getPoints();
 
+    /**
+     * Gets total score. (validated points after each round)
+     *
+     * @return the total score
+     */
     int getTotalScore();
 
+    /**
+     * Gets card at a given position.
+     *
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @return the card at the asked position if exists.
+     */
     CardInterface getCard(int x, int y);
 }

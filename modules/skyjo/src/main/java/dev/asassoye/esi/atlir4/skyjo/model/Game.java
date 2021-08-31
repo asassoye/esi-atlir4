@@ -27,6 +27,9 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Game class.
+ */
 public class Game implements ModelInterface {
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private final List<Player> players;
@@ -36,6 +39,9 @@ public class Game implements ModelInterface {
     private Player playing;
     private Card chosenCard;
 
+    /**
+     * Instantiates a new Game.
+     */
     public Game() {
         this.status = GameStatus.NOT_STARTED;
         this.players = new ArrayList<>();
@@ -46,19 +52,32 @@ public class Game implements ModelInterface {
         this.chosenCard = null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         this.pcs.addPropertyChangeListener(listener);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         this.pcs.removePropertyChangeListener(listener);
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     public GameStatus getStatus() {
         return status;
     }
 
+    /**
+     * Sets status.
+     *
+     * @param newStatus the new status
+     */
     public void setStatus(GameStatus newStatus) {
         GameStatus oldStatus = this.status;
         this.status = newStatus;
@@ -70,6 +89,12 @@ public class Game implements ModelInterface {
         return players;
     }
 
+    /**
+     * Gets player.
+     *
+     * @param id the id of the player
+     * @return the player if exists
+     */
     public Player getPlayer(int id) {
         for (var player : players) {
             if (player.getId() == id) {
@@ -79,6 +104,9 @@ public class Game implements ModelInterface {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void addPlayer(String name) {
         if (status != GameStatus.NOT_STARTED) {
             throw new IllegalStateException("You cannot add players during a game");
@@ -91,14 +119,27 @@ public class Game implements ModelInterface {
         }
     }
 
+    /**
+     * Add player without name.
+     */
     public void addPlayer() {
         addPlayer(null);
     }
 
+    /**
+     * Number of players
+     *
+     * @return nb players
+     */
     public int nbPlayers() {
         return players.size();
     }
 
+    /**
+     * Next player.
+     *
+     * @return the next player after playing
+     */
     public Player nextPlayer() {
         if (playing == null) {
             throw new IllegalStateException("No actual playing player");
@@ -111,6 +152,9 @@ public class Game implements ModelInterface {
         return getPlayer(playing.getId() + 1);
     }
 
+    /**
+     * Switch to next player.
+     */
     public void switchToNextPlayer() {
         setPlaying(nextPlayer());
 
@@ -121,6 +165,9 @@ public class Game implements ModelInterface {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void distributeCards() {
         if (status != GameStatus.NOT_STARTED) {
             throw new IllegalStateException("You cannot distribute cards during a game");
@@ -144,6 +191,9 @@ public class Game implements ModelInterface {
         setStatus(GameStatus.CHOOSING_INIT_CARDS);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void chooseTableCard(int x, int y) {
         switch (status) {
             case CHOOSING_INIT_CARDS:
@@ -185,6 +235,9 @@ public class Game implements ModelInterface {
         this.pcs.firePropertyChange("BOARD", null, this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void chooseDiscard() {
         if (status == GameStatus.CHOOSING_CARD) {
             chosenCard = discard.pop();
@@ -205,6 +258,9 @@ public class Game implements ModelInterface {
         throw new IllegalStateException("It is not the moment to choose the discard.");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void chooseDeck() {
         if (status == GameStatus.CHOOSING_CARD) {
             chosenCard = deck.pop();
@@ -216,27 +272,49 @@ public class Game implements ModelInterface {
         throw new IllegalStateException("It is not the moment to choose the deck.");
     }
 
+    /**
+     * Reveal all players.
+     */
     public void revealAllPlayers() {
         for (var player : players) {
             player.showAllCards();
         }
     }
 
+    /**
+     * Update all scores. (validate round score in total)
+     *
+     * @param initiator       the initiator player (who have to have min to not double)
+     * @param minPointsPlayer the min points player
+     */
     public void updateAllScores(Player initiator, Player minPointsPlayer) {
         for (var player : players) {
             player.validatePoints(player == initiator && initiator != minPointsPlayer);
         }
     }
 
+    /**
+     * Is game over boolean.
+     *
+     * @return the boolean
+     */
     public boolean isGameOver() {
         return getMaximumPointsPlayer().getTotalScore() >= 100;
     }
 
+    /**
+     * Next round init.
+     */
     public void next() {
         this.deck = new Deck(Deck.basicDeck);
         this.discard = new Deck();
     }
 
+    /**
+     * Gets minimum points' player.
+     *
+     * @return the minimum points player
+     */
     public Player getMinimumPointsPlayer() {
         Player minPlayer = null;
         int minPoints = Integer.MAX_VALUE;
@@ -251,6 +329,11 @@ public class Game implements ModelInterface {
         return minPlayer;
     }
 
+    /**
+     * Gets maximum points player.
+     *
+     * @return the maximum points player
+     */
     public Player getMaximumPointsPlayer() {
         Player maxPlayer = null;
         int maxPoints = Integer.MIN_VALUE;
@@ -265,18 +348,34 @@ public class Game implements ModelInterface {
         return maxPlayer;
     }
 
+    /**
+     * Gets deck.
+     *
+     * @return the deck
+     */
     public Deck getDeck() {
         return deck;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Deck getDiscard() {
         return discard;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Card getChosenCard() {
         return chosenCard;
     }
 
+    /**
+     * Sets chosen card.
+     *
+     * @param chosenCard the chosen card
+     */
     public void setChosenCard(Card chosenCard) {
         this.chosenCard = chosenCard;
     }
@@ -285,12 +384,20 @@ public class Game implements ModelInterface {
         return playing;
     }
 
+    /**
+     * Sets playing.
+     *
+     * @param playing the playing
+     */
     public void setPlaying(Player playing) {
         var old = this.playing;
         this.playing = playing;
         this.pcs.firePropertyChange("PLAYING", old, this.playing);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getInfo() {
         switch (status) {
@@ -315,11 +422,17 @@ public class Game implements ModelInterface {
         return "Etat inconnu.";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CardInterface getDeckCard() {
         return deck.top();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CardInterface getDiscardCard() {
         return discard.top();

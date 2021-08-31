@@ -25,30 +25,94 @@ package dev.asassoye.esi.atlir4.skyjo.model;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
+/**
+ * The interface Model interface.
+ */
 public interface ModelInterface {
+
+    /**
+     * Add property change listener. (observer)
+     *
+     * @param listener the listener
+     */
     void addPropertyChangeListener(PropertyChangeListener listener);
 
+    /**
+     * Remove ChangeListener
+     *
+     * @param listener the listener to remove
+     */
     void removePropertyChangeListener(PropertyChangeListener listener);
 
+    /**
+     * Add player.
+     *
+     * @param name the name of the new player
+     */
     void addPlayer(String name);
 
+    /**
+     * Distribute cards.
+     */
     void distributeCards();
 
+    /**
+     * Gets players.
+     *
+     * @return the players in a list
+     */
     List<? extends PlayerInterface> getPlayers();
 
+    /**
+     * Player choose table card.
+     *
+     * @param x the x position
+     * @param y the y position
+     */
     void chooseTableCard(int x, int y);
 
+    /**
+     * Player choose discard.
+     */
     void chooseDiscard();
 
+    /**
+     * Player choose deck.
+     */
     void chooseDeck();
 
+    /**
+     * Gets playing player.
+     *
+     * @return the playing player
+     */
     PlayerInterface getPlaying();
 
+    /**
+     * Gets status.
+     *
+     * @return the status of the game
+     */
     GameStatus getStatus();
 
+    /**
+     * Gets info text about situation.
+     *
+     * @return the info
+     */
     String getInfo();
 
+    /**
+     * Gets deck card.
+     *
+     * @return the deck card
+     */
     CardInterface getDeckCard();
 
+    /**
+     * Gets discard card.
+     *
+     * @return the discard card
+     */
     CardInterface getDiscardCard();
 }

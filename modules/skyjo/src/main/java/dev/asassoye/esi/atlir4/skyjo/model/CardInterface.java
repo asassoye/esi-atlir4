@@ -22,9 +22,22 @@
 
 package dev.asassoye.esi.atlir4.skyjo.model;
 
+/**
+ * The interface Card.
+ */
 public interface CardInterface {
+    /**
+     * Gets value.
+     *
+     * @return the value of the card
+     */
     int getValue();
 
+    /**
+     * Is visible boolean.
+     *
+     * @return Card is visible
+     */
     boolean isVisible();
 
     boolean equals(Object o);

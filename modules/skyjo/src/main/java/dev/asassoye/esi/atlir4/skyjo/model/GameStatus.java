@@ -23,12 +23,36 @@
 package dev.asassoye.esi.atlir4.skyjo.model;
 
 public enum GameStatus {
+    /**
+     * The game is not started
+     */
     NOT_STARTED,
+    /**
+     * The player have to choose two initial cards to start the game
+     */
     CHOOSING_INIT_CARDS,
+    /**
+     * The player is choosing a card in the deck or in the discard
+     */
     CHOOSING_CARD,
+    /**
+     * The player choose the deck card
+     */
     CHOSEN_FROM_DECK,
+    /**
+     * The player choose the discard card
+     */
     CHOSEN_FROM_DISCARD,
+    /**
+     * The player put the deck card into the discard
+     */
     CHOSEN_TO_DISCARD,
+    /**
+     * The round is over
+     */
     ROUND_OVER,
+    /**
+     * The game is over
+     */
     GAME_OVER
 }

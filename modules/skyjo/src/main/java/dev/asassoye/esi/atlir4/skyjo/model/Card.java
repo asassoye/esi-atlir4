@@ -63,18 +63,14 @@ public class Card implements CardInterface {
     }
 
     /**
-     * Gets value.
-     *
-     * @return the value of the card
+     * {@inheritDoc}
      */
     public int getValue() {
         return value;
     }
 
     /**
-     * Is visible boolean.
-     *
-     * @return Card is visible
+     * {@inheritDoc}
      */
     public boolean isVisible() {
         return visible;

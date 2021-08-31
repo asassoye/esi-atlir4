@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The type Player.
+ */
 public class Player implements PlayerInterface {
 
     private final int id;
@@ -33,6 +36,12 @@ public class Player implements PlayerInterface {
     private final String name;
     private final Card[][] cards;
 
+    /**
+     * Instantiates a new Player.
+     *
+     * @param id   the id
+     * @param name the name
+     */
     public Player(int id, String name) {
         this.id = id;
         this.name = name;
@@ -40,6 +49,11 @@ public class Player implements PlayerInterface {
         this.totalScore = 0;
     }
 
+    /**
+     * Instantiates a new Player without name.
+     *
+     * @param id the id of the player
+     */
     public Player(int id) {
         this(id, String.format("Player %d", id));
     }
@@ -52,10 +66,18 @@ public class Player implements PlayerInterface {
                 '}';
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Validate points of actual round.
+     *
+     * @param doubled if the points have to be doubled when validated.
+     */
     public void validatePoints(boolean doubled) {
         if (!isCompletelyReveled()) {
             throw new IllegalStateException("You cannot go to next round if you have not finished the board.");
@@ -64,11 +86,21 @@ public class Player implements PlayerInterface {
         totalScore += doubled ? getPoints() * 2 : getPoints();
     }
 
+    /**
+     * Next round setting.
+     *
+     * @param deck the deck to distribute new cards
+     */
     public void next(Deck deck) {
         cleanCards();
         placeCards(deck);
     }
 
+    /**
+     * Place cards in players hand.
+     *
+     * @param deck the deck to take cards of
+     */
     public void placeCards(Deck deck) {
         for (var i = 0; i < cards.length; ++i) {
             for (var j = 0; j < cards[i].length; ++j) {
@@ -80,6 +112,11 @@ public class Player implements PlayerInterface {
         }
     }
 
+    /**
+     * Place cards in players hand.
+     *
+     * @param cards fixed card hand
+     */
     public void placeCards(Card[][] cards) {
         if (cards.length != this.cards.length) {
             throw new IllegalArgumentException("cards have to be the same size as the player table");
@@ -95,20 +132,36 @@ public class Player implements PlayerInterface {
         }
     }
 
+    /**
+     * Remove all cards
+     */
     public void cleanCards() {
         for (Card[] card : this.cards) {
             Arrays.fill(card, null);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Card getCard(int x, int y) {
         return cards[y][x];
     }
 
+    /**
+     * Sets card.
+     *
+     * @param newCard the new card
+     * @param x       the x position
+     * @param y       the y position
+     */
     public void setCard(Card newCard, int x, int y) {
         cards[y][x] = newCard;
     }
 
+    /**
+     * Show all cards.
+     */
     public void showAllCards() {
         for (var y = 0; y < LINES; ++y) {
             for (var x = 0; x < COLUMNS; ++x) {
@@ -118,6 +171,12 @@ public class Player implements PlayerInterface {
         }
     }
 
+    /**
+     * Show a specific card.
+     *
+     * @param x the x coordinate
+     * @param y the y coordinate
+     */
     public void showCard(int x, int y) {
         Card card = getCard(x, y);
 
@@ -128,6 +187,11 @@ public class Player implements PlayerInterface {
         card.show();
     }
 
+    /**
+     * Number of shown cards in hand.
+     *
+     * @return nb cards
+     */
     public int shownCards() {
         int total = 0;
         for (var line : cards) {
@@ -140,6 +204,9 @@ public class Player implements PlayerInterface {
         return total;
     }
 
+    /**
+     * Delete full columns (columns with 3 same numbers).
+     */
     public void deleteFullLines() {
         columns:
         for (var j = 0; j < COLUMNS; ++j) {
@@ -165,6 +232,9 @@ public class Player implements PlayerInterface {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int getPoints() {
         int total = 0;
         for (Card[] line : cards) {
@@ -178,6 +248,11 @@ public class Player implements PlayerInterface {
         return total;
     }
 
+    /**
+     * Is completely reveled. (all cards are shown)
+     *
+     * @return true is completely revealed
+     */
     public boolean isCompletelyReveled() {
         for (Card[] line : cards) {
             for (Card card : line) {
@@ -190,6 +265,14 @@ public class Player implements PlayerInterface {
         return true;
     }
 
+    /**
+     * Exchange card.
+     *
+     * @param newCard the new card
+     * @param x       the x position
+     * @param y       the y position
+     * @return the card that was placed before newCard
+     */
     public Card exchangeCard(Card newCard, int x, int y) {
         Card old = getCard(x, y);
         setCard(newCard, x, y);
@@ -198,6 +281,12 @@ public class Player implements PlayerInterface {
         return old;
     }
 
+    /**
+     * Gets full column.
+     *
+     * @param column the column number
+     * @return the column in form of a list
+     */
     public List<Card> getColumn(int column) {
         List<Card> values = new ArrayList<>();
 
@@ -208,16 +297,27 @@ public class Player implements PlayerInterface {
         return values;
     }
 
+    /**
+     * Delete column.
+     *
+     * @param column the column
+     */
     public void deleteColumn(int column) {
         for (var i = 0; i < LINES; ++i) {
             cards[i][column] = null;
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int getTotalScore() {
         return totalScore;
     }
