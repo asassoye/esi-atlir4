@@ -28,6 +28,9 @@ import dev.asassoye.esi.atlir4.skyjo.view.components.Card;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * The Controller.
+ */
 public class Controller {
     private final ModelInterface model;
     private final View view;
@@ -35,6 +38,12 @@ public class Controller {
     private final EventHandler<MouseEvent> chooseDiscardAction;
     private final EventHandler<MouseEvent> chooseDeckAction;
 
+    /**
+     * Instantiates a new Controller.
+     *
+     * @param model the model
+     * @param view  the view
+     */
     public Controller(ModelInterface model, View view) {
         this.model = model;
         this.view = view;
