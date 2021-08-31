@@ -33,6 +33,7 @@ public class Controller {
     private final View view;
     private final EventHandler<MouseEvent> chooseTableCardAction;
     private final EventHandler<MouseEvent> chooseDiscardAction;
+    private final EventHandler<MouseEvent> chooseDeckAction;
 
     public Controller(ModelInterface model, View view) {
         this.model = model;
@@ -51,8 +52,10 @@ public class Controller {
         };
 
         this.chooseDiscardAction = (mouseEvent) -> model.chooseDiscard();
+        this.chooseDeckAction = (mouseEvent) -> model.chooseDeck();
 
         view.connectChooseTableCardAction(chooseTableCardAction);
         view.connectChooseDiscardAction(chooseDiscardAction);
+        view.connectChooseDeckAction(chooseDeckAction);
     }
 }

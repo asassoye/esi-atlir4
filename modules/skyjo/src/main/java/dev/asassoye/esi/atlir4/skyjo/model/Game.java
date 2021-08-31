@@ -166,10 +166,12 @@ public class Game implements ModelInterface {
                 switchToNextPlayer();
                 break;
             case CHOSEN_FROM_DISCARD:
+            case CHOSEN_FROM_DECK:
                 Card exchanged = playing.exchangeCard(chosenCard, x, y);
                 exchanged.show();
                 discard.add(exchanged);
                 this.pcs.firePropertyChange("DISCARD", null, discard.top());
+                this.pcs.firePropertyChange("DECK", null, deck.top());
                 chosenCard = null;
                 setStatus(GameStatus.CHOOSING_CARD);
 
@@ -185,12 +187,32 @@ public class Game implements ModelInterface {
     public void chooseDiscard() {
         if (status == GameStatus.CHOOSING_CARD) {
             chosenCard = discard.pop();
-            this.pcs.firePropertyChange("DISCARD", null, discard.top());
+            this.pcs.firePropertyChange("DISCARD", chosenCard, discard.top());
             setStatus(GameStatus.CHOSEN_FROM_DISCARD);
             return;
         }
 
-        throw new IllegalStateException("It is not the moment to choose de discard.");
+        if (status == GameStatus.CHOSEN_FROM_DECK) {
+            chosenCard.show();
+            discard.add(chosenCard);
+            chosenCard = null;
+            this.pcs.firePropertyChange("DISCARD", null, discard.top());
+            setStatus(GameStatus.CHOSEN_TO_DISCARD);
+            return;
+        }
+
+        throw new IllegalStateException("It is not the moment to choose the discard.");
+    }
+
+    public void chooseDeck() {
+        if (status == GameStatus.CHOOSING_CARD) {
+            chosenCard = deck.pop();
+            this.pcs.firePropertyChange("DECK", chosenCard, deck.top());
+            setStatus(GameStatus.CHOSEN_FROM_DECK);
+            return;
+        }
+
+        throw new IllegalStateException("It is not the moment to choose the deck.");
     }
 
     public void revealAllPlayers() {

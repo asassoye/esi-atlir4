@@ -61,6 +61,6 @@ public class Player extends VBox implements ResourceStylable {
             }
         }
 
-        name.setText(String.format("%s - %d (%d)", player.getName(), player.getPoints(), player.getTotalScore()));
+        name.setText(String.format("%s [%d]", player.getName(), player.getPoints()));
     }
 }

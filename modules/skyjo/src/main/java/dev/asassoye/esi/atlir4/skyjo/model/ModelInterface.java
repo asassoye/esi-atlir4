@@ -40,6 +40,8 @@ public interface ModelInterface {
 
     void chooseDiscard();
 
+    void chooseDeck();
+
     PlayerInterface getPlaying();
 
     GameStatus getStatus();
