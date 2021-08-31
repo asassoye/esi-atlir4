@@ -30,15 +30,32 @@ import javafx.scene.input.MouseEvent;
 
 import java.util.logging.Logger;
 
+/**
+ * The Card.
+ */
 public class Card extends Button implements ResourceStylable {
     private static final Logger LOGGER = Logger.getLogger("card");
+    /**
+     * The constant bHeight.
+     */
     public static final double bHeight = 1195;
+    /**
+     * The constant bWidth.
+     */
     public static final double bWidth = 771;
     private int value;
     private boolean visible;
     private int x;
     private int y;
 
+    /**
+     * Instantiates a new Card.
+     *
+     * @param x       the x position
+     * @param y       the y position
+     * @param value   the value of the card
+     * @param visible the visibility
+     */
     public Card(int x, int y, int value, boolean visible) {
         this.x = x;
         this.y = y;
@@ -52,89 +69,23 @@ public class Card extends Button implements ResourceStylable {
         this.prefWidthProperty().bind(this.heightProperty().multiply(bWidth / bHeight));
     }
 
+    /**
+     * Instantiates a new Card.
+     *
+     * @param card the card
+     * @param x    the x position
+     * @param y    the y position
+     */
     public Card(CardInterface card, int x, int y) {
         this(x, y, card.getValue(), card.isVisible());
     }
 
-    public void connectChooseTableCardAction(EventHandler<MouseEvent> eventHandler) {
-        this.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
-    }
-
-    public void update(int value, boolean visible) {
-        setValue(value);
-        setVisibility(visible);
-    }
-
-    public void update(CardInterface card) {
-        update(card.getValue(), card.isVisible());
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int newValue, boolean init) {
-        if (newValue != this.value || init) {
-            this.getStyleClass().remove(classByValue(this.value));
-            this.value = newValue;
-            this.getStyleClass().add(classByValue(this.value));
-        }
-    }
-
-    public void setValue(int newValue) {
-        setValue(newValue, false);
-    }
-
-    public void show() {
-        show(false);
-    }
-
-    public void show(boolean init) {
-        if (!this.visible || init) {
-            this.getStyleClass().remove("hidden");
-            this.visible = true;
-        }
-    }
-
-    public void setVisibility(boolean visible, boolean init) {
-        if (visible) {
-            show(init);
-        } else {
-            hide(init);
-        }
-    }
-
-    public void setVisibility(boolean visible) {
-        setVisibility(visible, false);
-    }
-
-    public void hide() {
-        hide(false);
-    }
-
-    public void hide(boolean init) {
-        if (this.visible || init) {
-            this.getStyleClass().add("hidden");
-            this.visible = false;
-        }
-    }
-
+    /**
+     * Class by value string.
+     *
+     * @param value the value
+     * @return the string
+     */
     public static String classByValue(int value) {
         switch (value) {
             case -2:
@@ -168,6 +119,164 @@ public class Card extends Button implements ResourceStylable {
             case 0:
             default:
                 return "zero";
+        }
+    }
+
+    /**
+     * Connect choose table card action.
+     *
+     * @param eventHandler the event handler
+     */
+    public void connectChooseTableCardAction(EventHandler<MouseEvent> eventHandler) {
+        this.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+    }
+
+    /**
+     * Update.
+     *
+     * @param value   the value
+     * @param visible the visible
+     */
+    public void update(int value, boolean visible) {
+        setValue(value);
+        setVisibility(visible);
+    }
+
+    /**
+     * Update.
+     *
+     * @param card the card
+     */
+    public void update(CardInterface card) {
+        update(card.getValue(), card.isVisible());
+    }
+
+    /**
+     * Gets x.
+     *
+     * @return the x
+     */
+    public int getX() {
+        return x;
+    }
+
+    /**
+     * Sets x.
+     *
+     * @param x the x
+     */
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    /**
+     * Gets y.
+     *
+     * @return the y
+     */
+    public int getY() {
+        return y;
+    }
+
+    /**
+     * Sets y.
+     *
+     * @param y the y
+     */
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    /**
+     * Gets value.
+     *
+     * @return the value
+     */
+    public int getValue() {
+        return value;
+    }
+
+    /**
+     * Sets value.
+     *
+     * @param newValue the new value
+     */
+    public void setValue(int newValue) {
+        setValue(newValue, false);
+    }
+
+    /**
+     * Sets value.
+     *
+     * @param newValue the new value
+     * @param init     the init
+     */
+    public void setValue(int newValue, boolean init) {
+        if (newValue != this.value || init) {
+            this.getStyleClass().remove(classByValue(this.value));
+            this.value = newValue;
+            this.getStyleClass().add(classByValue(this.value));
+        }
+    }
+
+    /**
+     * Show the card.
+     */
+    public void show() {
+        show(false);
+    }
+
+    /**
+     * Show the card.
+     *
+     * @param init the init
+     */
+    public void show(boolean init) {
+        if (!this.visible || init) {
+            this.getStyleClass().remove("hidden");
+            this.visible = true;
+        }
+    }
+
+    /**
+     * Sets visibility.
+     *
+     * @param visible the visible
+     * @param init    the init
+     */
+    public void setVisibility(boolean visible, boolean init) {
+        if (visible) {
+            show(init);
+        } else {
+            hide(init);
+        }
+    }
+
+    /**
+     * Sets visibility.
+     *
+     * @param visible the visible
+     */
+    public void setVisibility(boolean visible) {
+        setVisibility(visible, false);
+    }
+
+    /**
+     * Hide.
+     */
+    public void hide() {
+        hide(false);
+    }
+
+    /**
+     * Hide card.
+     *
+     * @param init the init
+     */
+    public void hide(boolean init) {
+        if (this.visible || init) {
+            this.getStyleClass().add("hidden");
+            this.visible = false;
         }
     }
 }

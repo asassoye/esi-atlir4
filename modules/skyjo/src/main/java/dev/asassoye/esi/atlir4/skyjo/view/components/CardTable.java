@@ -31,15 +31,36 @@ import javafx.scene.layout.GridPane;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Card table. (Collection of cards)
+ */
 public class CardTable extends GridPane implements ResourceStylable {
+    /**
+     * The constant COLUMNS.
+     */
     public static final int COLUMNS = 4;
+    /**
+     * The constant ROWS.
+     */
     public static final int ROWS = 3;
+    /**
+     * The constant bHeight.
+     */
     public static final double bHeight = Card.bHeight * ROWS;
+    /**
+     * The constant bWidth.
+     */
     public static final double bWidth = Card.bHeight * COLUMNS;
+    /**
+     * The constant gap.
+     */
     public static final double gap = 10.0;
 
     private final List<Card> cards;
 
+    /**
+     * Instantiates a new Card table.
+     */
     public CardTable() {
         this.cards = new ArrayList<>();
         this.getStyleClass().add("cardTable");
@@ -50,12 +71,22 @@ public class CardTable extends GridPane implements ResourceStylable {
         this.prefWidthProperty().bind(this.heightProperty().multiply(bWidth / bHeight));
     }
 
+    /**
+     * Connect choose table card action.
+     *
+     * @param eventHandler the event handler
+     */
     public void connectChooseTableCardAction(EventHandler<MouseEvent> eventHandler) {
         for (var card : cards) {
             card.connectChooseTableCardAction(eventHandler);
         }
     }
 
+    /**
+     * Add card.
+     *
+     * @param card the card
+     */
     public void addCard(Card card) {
         this.cards.add(card);
         this.add(card, card.getX(), card.getY());
@@ -63,21 +94,45 @@ public class CardTable extends GridPane implements ResourceStylable {
         card.prefWidthProperty().bind(this.widthProperty().divide(COLUMNS).subtract(gap * COLUMNS));
     }
 
+    /**
+     * Add card.
+     *
+     * @param card the card
+     * @param x    the x
+     * @param y    the y
+     */
     public void addCard(CardInterface card, int x, int y) {
         addCard(new Card(x, y, card.getValue(), card.isVisible()));
     }
 
+    /**
+     * Add cards.
+     *
+     * @param cards the cards
+     */
     public void addCards(List<Card> cards) {
         for (var card : cards) {
             addCard(card);
         }
     }
 
+    /**
+     * Remove card.
+     *
+     * @param card the card
+     */
     public void removeCard(Card card) {
         this.getChildren().remove(card);
         this.cards.remove(card);
     }
 
+    /**
+     * Gets card.
+     *
+     * @param x the x
+     * @param y the y
+     * @return the card
+     */
     public Card getCard(int x, int y) {
         for (var card : cards) {
             if (card != null) {
@@ -89,6 +144,13 @@ public class CardTable extends GridPane implements ResourceStylable {
         return null;
     }
 
+    /**
+     * Update card.
+     *
+     * @param card the card
+     * @param x    the x
+     * @param y    the y
+     */
     public void updateCard(CardInterface card, int x, int y) {
         Card cardNode = getCard(x, y);
 

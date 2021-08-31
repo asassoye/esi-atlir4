@@ -27,7 +27,16 @@ import javafx.scene.layout.Region;
 
 import java.net.URL;
 
+/**
+ * The interface Resource stylable.
+ */
 public interface ResourceStylable extends Styleable {
+    /**
+     * Apply styles from ressource.
+     *
+     * @param resource the resource link
+     * @param node     the node to apply styles
+     */
     default void applyStyles(String resource, Region node) {
         URL url = getClass().getResource(resource);
         if (url != null) {

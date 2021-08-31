@@ -37,24 +37,39 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
+/**
+ * The View.
+ */
 public class View implements PropertyChangeListener {
     private final Stage primaryStage;
     private Scene scene;
     private Game game;
 
+    /**
+     * Instantiates a new View.
+     *
+     * @param stage the primary stage
+     */
     public View(Stage stage) {
         this.primaryStage = stage;
         this.game = null;
         stage.setTitle("Skyjo");
     }
 
-    public void createBoard(List<? extends PlayerInterface> players, CardInterface deck, CardInterface withdraw) {
+    /**
+     * Create board.
+     *
+     * @param players the players of the game
+     * @param deck    the deck card
+     * @param discard the discard card
+     */
+    public void createBoard(List<? extends PlayerInterface> players, CardInterface deck, CardInterface discard) {
         PlayerInterface player1 = players.get(0);
         PlayerInterface player2 = players.get(1);
 
         this.game = new Game(player1, player2);
         game.updateDeckCard(deck);
-        game.updateWithdraw(withdraw);
+        game.updateDiscard(discard);
 
         this.scene = new Scene(game, 1200, 700);
         game.minHeightProperty().bind(scene.heightProperty());
@@ -64,18 +79,38 @@ public class View implements PropertyChangeListener {
         this.primaryStage.show();
     }
 
+    /**
+     * Connect choose table card action.
+     *
+     * @param eventHandler the event handler
+     */
     public void connectChooseTableCardAction(EventHandler<MouseEvent> eventHandler) {
         this.game.connectChooseTableCardAction(eventHandler);
     }
 
+    /**
+     * Connect choose discard action.
+     *
+     * @param eventHandler the event handler
+     */
     public void connectChooseDiscardAction(EventHandler<MouseEvent> eventHandler) {
         game.connectChooseDiscardAction(eventHandler);
     }
 
+    /**
+     * Connect choose deck action.
+     *
+     * @param eventHandler the event handler
+     */
     public void connectChooseDeckAction(EventHandler<MouseEvent> eventHandler) {
         game.connectChooseDeckAction(eventHandler);
     }
 
+    /**
+     * Update board.
+     *
+     * @param players the players
+     */
     public void updateBoard(List<? extends PlayerInterface> players) {
         PlayerInterface player1 = players.get(0);
         PlayerInterface player2 = players.get(1);
@@ -83,6 +118,11 @@ public class View implements PropertyChangeListener {
         this.game.update(player1, player2);
     }
 
+    /**
+     * Alert.
+     *
+     * @param warning the warning
+     */
     public void alert(String warning) {
         Alert alert = new Alert(Alert.AlertType.WARNING, warning);
         alert.showAndWait();
@@ -111,7 +151,7 @@ public class View implements PropertyChangeListener {
                 }
                 break;
             case "DISCARD":
-                game.updateWithdraw(model.getDiscardCard());
+                game.updateDiscard(model.getDiscardCard());
                 break;
         }
     }

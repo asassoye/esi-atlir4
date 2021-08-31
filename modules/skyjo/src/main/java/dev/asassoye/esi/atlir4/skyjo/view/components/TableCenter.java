@@ -29,18 +29,18 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 public class TableCenter extends VBox implements ResourceStylable {
-    public Card withdraw;
+    public Card discard;
     public Card deckCard;
 
     public TableCenter() {
-        this.withdraw = new Card(0, 0, 12, true);
+        this.discard = new Card(0, 0, 12, true);
         this.deckCard = new Card(0, 0, -2, false);
 
-        this.withdraw.prefWidthProperty().bind(this.widthProperty());
+        this.discard.prefWidthProperty().bind(this.widthProperty());
         this.deckCard.prefWidthProperty().bind(this.widthProperty());
 
 
-        this.getChildren().add(this.withdraw);
+        this.getChildren().add(this.discard);
         this.getChildren().add(this.deckCard);
 
         applyStyles("/styles/components/tablecenter.css", this);
@@ -48,7 +48,7 @@ public class TableCenter extends VBox implements ResourceStylable {
     }
 
     public void connectChooseDiscardAction(EventHandler<MouseEvent> eventHandler) {
-        withdraw.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+        discard.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
     }
 
     public void connectChooseDeckAction(EventHandler<MouseEvent> eventHandler) {
@@ -59,7 +59,7 @@ public class TableCenter extends VBox implements ResourceStylable {
         deckCard.update(card);
     }
 
-    public void setWithdraw(CardInterface card) {
-        withdraw.update(card);
+    public void setDiscard(CardInterface card) {
+        discard.update(card);
     }
 }

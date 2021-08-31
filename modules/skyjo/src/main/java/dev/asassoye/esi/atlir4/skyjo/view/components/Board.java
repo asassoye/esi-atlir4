@@ -29,12 +29,21 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
+/**
+ * The Board.
+ */
 public class Board extends HBox implements ResourceStylable {
     private final Player player1;
     private final TableCenter tableCenter;
     private final Player player2;
     private Player playing;
 
+    /**
+     * Instantiates a new Board.
+     *
+     * @param player1 the player 1
+     * @param player2 the player 2
+     */
     public Board(PlayerInterface player1, PlayerInterface player2) {
         this.player1 = new Player(player1);
         this.player2 = new Player(player2);
@@ -67,27 +76,57 @@ public class Board extends HBox implements ResourceStylable {
         });
     }
 
+    /**
+     * Update deck card.
+     *
+     * @param card the deck
+     */
     public void updateDeckCard(CardInterface card) {
         tableCenter.setDeckCard(card);
     }
 
-    public void updateWithdraw(CardInterface card) {
-        tableCenter.setWithdraw(card);
+    /**
+     * Update discard.
+     *
+     * @param card the discard
+     */
+    public void updateDiscard(CardInterface card) {
+        tableCenter.setDiscard(card);
     }
 
+    /**
+     * Connect choose table card action.
+     *
+     * @param eventHandler the event handler
+     */
     public void connectChooseTableCardAction(EventHandler<MouseEvent> eventHandler) {
         this.player1.connectChooseTableCardAction(eventHandler);
         this.player2.connectChooseTableCardAction(eventHandler);
     }
 
+    /**
+     * Connect choose discard action.
+     *
+     * @param eventHandler the event handler
+     */
     public void connectChooseDiscardAction(EventHandler<MouseEvent> eventHandler) {
         tableCenter.connectChooseDiscardAction(eventHandler);
     }
 
+    /**
+     * Connect choose deck action.
+     *
+     * @param eventHandler the event handler
+     */
     public void connectChooseDeckAction(EventHandler<MouseEvent> eventHandler) {
         tableCenter.connectChooseDeckAction(eventHandler);
     }
 
+    /**
+     * Sets playing.
+     *
+     * @param i the playing player id
+     */
     public void setPlaying(int i) {
         switch (i) {
             case 1:
@@ -101,6 +140,12 @@ public class Board extends HBox implements ResourceStylable {
         }
     }
 
+    /**
+     * Update.
+     *
+     * @param player1 the player 1
+     * @param player2 the player 2
+     */
     public void update(PlayerInterface player1, PlayerInterface player2) {
         this.player1.update(player1);
         this.player2.update(player2);

@@ -29,10 +29,18 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
+/**
+ * The type Player.
+ */
 public class Player extends VBox implements ResourceStylable {
     private final Label name;
     private final CardTable cardTable;
 
+    /**
+     * Instantiates a new Player.
+     *
+     * @param player the player
+     */
     public Player(PlayerInterface player) {
         applyStyles("/styles/components/player.css", this);
         this.name = new Label(player.getName());
@@ -50,10 +58,20 @@ public class Player extends VBox implements ResourceStylable {
         this.cardTable.prefWidthProperty().bind(this.widthProperty());
     }
 
+    /**
+     * Connect choose table card action.
+     *
+     * @param eventHandler the event handler
+     */
     public void connectChooseTableCardAction(EventHandler<MouseEvent> eventHandler) {
         cardTable.connectChooseTableCardAction(eventHandler);
     }
 
+    /**
+     * Update.
+     *
+     * @param player the player
+     */
     public void update(PlayerInterface player) {
         for (var x = 0; x < PlayerInterface.COLUMNS; ++x) {
             for (var y = 0; y < PlayerInterface.LINES; ++y) {

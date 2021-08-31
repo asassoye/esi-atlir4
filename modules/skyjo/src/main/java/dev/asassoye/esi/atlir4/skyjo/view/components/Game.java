@@ -30,11 +30,20 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
+/**
+ * The Game.
+ */
 public class Game extends VBox implements ResourceStylable {
     private final Board board;
     private final Label title;
     private final Label info;
 
+    /**
+     * Instantiates a new Game.
+     *
+     * @param player1 the player 1
+     * @param player2 the player 2
+     */
     public Game(PlayerInterface player1, PlayerInterface player2) {
         this.board = new Board(player1, player2);
         this.title = new Label("SKYJO");
@@ -59,34 +68,75 @@ public class Game extends VBox implements ResourceStylable {
         this.info.getStyleClass().add("gameInfo");
     }
 
+    /**
+     * Sets info.
+     *
+     * @param info the info
+     */
     public void setInfo(String info) {
         this.info.setText(info);
     }
 
+    /**
+     * Sets playing.
+     *
+     * @param id the id
+     */
     public void setPlaying(int id) {
         board.setPlaying(id);
     }
 
+    /**
+     * Update deck card.
+     *
+     * @param card the card
+     */
     public void updateDeckCard(CardInterface card) {
         board.updateDeckCard(card);
     }
 
-    public void updateWithdraw(CardInterface card) {
-        board.updateWithdraw(card);
+    /**
+     * Update discard.
+     *
+     * @param card the card
+     */
+    public void updateDiscard(CardInterface card) {
+        board.updateDiscard(card);
     }
 
+    /**
+     * Connect choose table card action.
+     *
+     * @param eventHandler the event handler
+     */
     public void connectChooseTableCardAction(EventHandler<MouseEvent> eventHandler) {
         this.board.connectChooseTableCardAction(eventHandler);
     }
 
+    /**
+     * Connect choose discard action.
+     *
+     * @param eventHandler the event handler
+     */
     public void connectChooseDiscardAction(EventHandler<MouseEvent> eventHandler) {
         board.connectChooseDiscardAction(eventHandler);
     }
 
+    /**
+     * Connect choose deck action.
+     *
+     * @param eventHandler the event handler
+     */
     public void connectChooseDeckAction(EventHandler<MouseEvent> eventHandler) {
         board.connectChooseDeckAction(eventHandler);
     }
 
+    /**
+     * Update.
+     *
+     * @param player1 the player 1
+     * @param player2 the player 2
+     */
     public void update(PlayerInterface player1, PlayerInterface player2) {
         this.board.update(player1, player2);
     }
