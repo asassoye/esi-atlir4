@@ -48,11 +48,30 @@ public class Controller {
             Card source = (Card) mouseEvent.getSource();
             int x = source.getX();
             int y = source.getY();
-            model.chooseTableCard(x, y);
+            try {
+                model.chooseTableCard(x, y);
+            } catch (Exception e) {
+                view.alert(e.getMessage());
+            }
+
         };
 
-        this.chooseDiscardAction = (mouseEvent) -> model.chooseDiscard();
-        this.chooseDeckAction = (mouseEvent) -> model.chooseDeck();
+        this.chooseDiscardAction = (mouseEvent) -> {
+            try {
+                model.chooseDiscard();
+            } catch (Exception e) {
+                view.alert(e.getMessage());
+            }
+
+        };
+        this.chooseDeckAction = (mouseEvent) -> {
+            try {
+                model.chooseDeck();
+            } catch (Exception e) {
+                view.alert(e.getMessage());
+            }
+
+        };
 
         view.connectChooseTableCardAction(chooseTableCardAction);
         view.connectChooseDiscardAction(chooseDiscardAction);

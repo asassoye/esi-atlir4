@@ -23,7 +23,6 @@
 package dev.asassoye.esi.atlir4.skyjo.view.components;
 
 import dev.asassoye.esi.atlir4.skyjo.model.CardInterface;
-import dev.asassoye.esi.atlir4.skyjo.model.GameStatus;
 import dev.asassoye.esi.atlir4.skyjo.model.PlayerInterface;
 import dev.asassoye.esi.atlir4.skyjo.view.utils.ResourceStylable;
 import javafx.event.EventHandler;
@@ -35,7 +34,6 @@ public class Board extends HBox implements ResourceStylable {
     private final TableCenter tableCenter;
     private final Player player2;
     private Player playing;
-    private GameStatus status;
 
     public Board(PlayerInterface player1, PlayerInterface player2) {
         this.player1 = new Player(player1);
@@ -101,10 +99,6 @@ public class Board extends HBox implements ResourceStylable {
             default:
                 playing = null;
         }
-    }
-
-    public void setStatus(GameStatus newStatus) {
-        this.status = newStatus;
     }
 
     public void update(PlayerInterface player1, PlayerInterface player2) {

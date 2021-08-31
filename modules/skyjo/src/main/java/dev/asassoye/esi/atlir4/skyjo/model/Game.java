@@ -163,6 +163,7 @@ public class Game implements ModelInterface {
                     throw new IllegalStateException("This card is already shown");
                 }
                 playing.showCard(x, y);
+                setStatus(GameStatus.CHOOSING_CARD);
                 switchToNextPlayer();
                 break;
             case CHOSEN_FROM_DISCARD:
@@ -300,9 +301,9 @@ public class Game implements ModelInterface {
             case CHOOSING_CARD:
                 return String.format("%s, veuillez prendre une carte dans le deck ou dans la defausse.", playing.getName());
             case CHOSEN_FROM_DISCARD:
-                return String.format("%s, que voulez-vous où voulez-vous placer la carte de la défausse de valeur %d?", playing.getName(), chosenCard.getValue());
+                return String.format("%s, où voulez-vous placer la carte de la défausse de valeur %d?", playing.getName(), chosenCard.getValue());
             case CHOSEN_FROM_DECK:
-                return String.format("%s, que voulez-vous où voulez-vous placer la carte du deck de valeur %d?", playing.getName(), chosenCard.getValue());
+                return String.format("%s, où voulez-vous placer la carte du deck de valeur %d?", playing.getName(), chosenCard.getValue());
             case CHOSEN_TO_DISCARD:
                 return String.format("%s, vous avez mis la carte dans la défausse. Veuillez choisir une carte a retourner", playing.getName());
             case ROUND_OVER:

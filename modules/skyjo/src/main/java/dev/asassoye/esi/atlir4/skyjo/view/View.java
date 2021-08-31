@@ -29,20 +29,18 @@ import dev.asassoye.esi.atlir4.skyjo.model.PlayerInterface;
 import dev.asassoye.esi.atlir4.skyjo.view.components.Game;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class View implements PropertyChangeListener {
     private final Stage primaryStage;
     private Scene scene;
     private Game game;
-    private Consumer<MouseEvent> chooseTableCardAction;
-    private GameStatus status;
 
     public View(Stage stage) {
         this.primaryStage = stage;
@@ -85,13 +83,17 @@ public class View implements PropertyChangeListener {
         this.game.update(player1, player2);
     }
 
+    public void alert(String warning) {
+        Alert alert = new Alert(Alert.AlertType.WARNING, warning);
+        alert.showAndWait();
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         ModelInterface model = (ModelInterface) evt.getSource();
 
         switch (evt.getPropertyName()) {
             case "STATUS":
-                status = (GameStatus) evt.getNewValue();
                 if (evt.getNewValue() == GameStatus.CHOOSING_INIT_CARDS) {
                     createBoard(model.getPlayers(), model.getDeckCard(), model.getDiscardCard());
                     this.game.setPlaying(model.getPlaying().getId());
